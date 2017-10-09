@@ -7,8 +7,8 @@
     <ProjectGuid>{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Plugin.FileService.Plugin</RootNamespace>
-    <AssemblyName>Plugin.FileService.Plugin</AssemblyName>
+    <RootNamespace>Plugin.FileService</RootNamespace>
+    <AssemblyName>Plugin.FileService</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -35,7 +35,7 @@
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Plugin.FileService.Plugin.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Plugin.FileService.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -58,7 +58,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-      <DocumentationFile>bin\Release\Plugin.FileService.Plugin.XML</DocumentationFile>
+      <DocumentationFile>bin\Release\Plugin.FileService.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -109,17 +109,17 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Plugin.FileService.Plugin\CrossFileService.Plugin.cs">
-      <Link>CrossFileService.Plugin.cs</Link>
+    <Compile Include="..\Plugin.FileService\CrossFileService.cs">
+      <Link>CrossFileService.cs</Link>
     </Compile>
-    <Compile Include="FileService.PluginImplementation.cs" />
+    <Compile Include="FileServiceImplementation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Plugin.FileService.Plugin.UWP.rd.xml" />
+    <EmbeddedResource Include="Properties\Plugin.FileService.UWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Plugin.FileService.Plugin.Abstractions\Plugin.FileService.Plugin.Abstractions.csproj">
+    <ProjectReference Include="..\Plugin.FileService.Abstractions\Plugin.FileService.Abstractions.csproj">
       <Project>{6edb0588-ffc5-4ef5-8a99-9e241d0f878d}</Project>
-      <Name>Plugin.FileService.Plugin.Abstractions</Name>
+      <Name>Plugin.FileService.Abstractions</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

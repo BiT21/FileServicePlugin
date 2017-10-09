@@ -8,9 +8,9 @@
     <ProjectGuid>{2882AEEB-D4CD-4EB9-8A6C-6653B33681F0}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Plugin.FileService.Plugin</RootNamespace>
+    <RootNamespace>Plugin.FileService</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Plugin.FileService.Plugin</AssemblyName>
+    <AssemblyName>Plugin.FileService</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,19 +32,19 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <DocumentationFile>bin\iPhone\Release\Plugin.FileService.Plugin.XML</DocumentationFile>
+    <DocumentationFile>bin\iPhone\Release\Plugin.FileService.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\Plugin.FileService.Plugin\CrossFileService.Plugin.cs">
-      <Link>CrossFileService.Plugin.cs</Link>
+    <Compile Include="..\Plugin.FileService\CrossFileService.cs">
+      <Link>CrossFileService.cs</Link>
     </Compile>
-    <Compile Include="FileService.PluginImplementation.cs" />
+    <Compile Include="FileServiceImplementation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Plugin.FileService.Plugin.Abstractions\Plugin.FileService.Plugin.Abstractions.csproj">
+    <ProjectReference Include="..\Plugin.FileService.Abstractions\Plugin.FileService.Abstractions.csproj">
       <Project>{6edb0588-ffc5-4ef5-8a99-9e241d0f878d}</Project>
-      <Name>Plugin.FileService.Plugin.Abstractions</Name>
+      <Name>Plugin.FileService.Abstractions</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

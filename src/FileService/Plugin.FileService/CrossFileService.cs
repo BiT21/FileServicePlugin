@@ -1,19 +1,19 @@
-﻿using Plugin.FileService.Plugin.Abstractions;
+﻿using Plugin.FileService.Abstractions;
 using System;
 
-namespace Plugin.FileService.Plugin
+namespace Plugin.FileService
 {
   /// <summary>
-  /// Cross platform FileService.Plugin implemenations
+  /// Cross platform FileService implemenations
   /// </summary>
-  public class CrossFileService.Plugin
+  public class CrossFileService
   {
-    static Lazy<IFileService.Plugin> Implementation = new Lazy<IFileService.Plugin>(() => CreateFileService.Plugin(), System.Threading.LazyThreadSafetyMode.PublicationOnly);
+    static Lazy<IFileService> Implementation = new Lazy<IFileService>(() => CreateFileService(), System.Threading.LazyThreadSafetyMode.PublicationOnly);
 
     /// <summary>
     /// Current settings to use
     /// </summary>
-    public static IFileService.Plugin Current
+    public static IFileService Current
     {
       get
       {
@@ -26,12 +26,12 @@ namespace Plugin.FileService.Plugin
       }
     }
 
-    static IFileService.Plugin CreateFileService.Plugin()
+    static IFileService CreateFileService()
     {
 #if PORTABLE
         return null;
 #else
-        return new FileService.PluginImplementation();
+        return new FileServiceImplementation();
 #endif
     }
 

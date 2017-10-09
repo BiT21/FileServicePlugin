@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService.Plugin", "FileService.Plugin\Plugin.FileService.Plugin\Plugin.FileService.Plugin.csproj", "{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService", "FileService\Plugin.FileService\Plugin.FileService.csproj", "{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService.Plugin.Abstractions", "FileService.Plugin\Plugin.FileService.Plugin.Abstractions\Plugin.FileService.Plugin.Abstractions.csproj", "{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService.Abstractions", "FileService\Plugin.FileService.Abstractions\Plugin.FileService.Abstractions.csproj", "{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService.Plugin.iOS", "FileService.Plugin\Plugin.FileService.Plugin.iOS\Plugin.FileService.Plugin.iOS.csproj", "{2882AEEB-D4CD-4EB9-8A6C-6653B33681F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService.iOS", "FileService\Plugin.FileService.iOS\Plugin.FileService.iOS.csproj", "{2882AEEB-D4CD-4EB9-8A6C-6653B33681F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService.Plugin.Android", "FileService.Plugin\Plugin.FileService.Plugin.Android\Plugin.FileService.Plugin.Android.csproj", "{56A56F17-7DE1-4CA1-9617-BF32E971AC84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService.Android", "FileService\Plugin.FileService.Android\Plugin.FileService.Android.csproj", "{56A56F17-7DE1-4CA1-9617-BF32E971AC84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService.Plugin.UWP", "FileService.Plugin\Plugin.FileService.Plugin.UWP\Plugin.FileService.Plugin.UWP.csproj", "{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService.UWP", "FileService\Plugin.FileService.UWP\Plugin.FileService.UWP.csproj", "{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
