@@ -17,7 +17,7 @@ namespace Plugin.FileService
     {
       get
       {
-        var ret = Implementation.Value;
+         var ret = Implementation.Value;
         if (ret == null)
         {
           throw NotImplementedInReferenceAssembly();

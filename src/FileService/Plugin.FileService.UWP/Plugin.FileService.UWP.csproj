@@ -58,7 +58,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-      <DocumentationFile>bin\Release\Plugin.FileService.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Plugin.FileService.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -112,7 +112,12 @@
     <Compile Include="..\Plugin.FileService\CrossFileService.cs">
       <Link>CrossFileService.cs</Link>
     </Compile>
-    <Compile Include="FileServiceImplementation.cs" />
+    <Compile Include="..\Plugin.FileService\FileServiceBase.cs">
+      <Link>FileServiceBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Plugin.FileService\FileServiceImplementation.cs">
+      <Link>FileServiceImplementation.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Plugin.FileService.UWP.rd.xml" />
   </ItemGroup>

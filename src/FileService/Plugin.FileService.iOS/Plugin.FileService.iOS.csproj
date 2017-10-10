@@ -38,7 +38,12 @@
     <Compile Include="..\Plugin.FileService\CrossFileService.cs">
       <Link>CrossFileService.cs</Link>
     </Compile>
-    <Compile Include="FileServiceImplementation.cs" />
+    <Compile Include="..\Plugin.FileService\FileServiceBase.cs">
+      <Link>FileServiceBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Plugin.FileService\FileServiceImplementation.cs">
+      <Link>FileServiceImplementation.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -48,10 +53,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
