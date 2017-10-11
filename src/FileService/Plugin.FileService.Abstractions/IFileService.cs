@@ -10,6 +10,11 @@ namespace Plugin.FileService.Abstractions
   public interface IFileService
   {
         /// <summary>
+        /// Holds the RootFolder for the FileService operations.
+        /// </summary>
+        string RootFolder { get; set; }
+
+        /// <summary>
         /// Read from file sistem the file expecting TResponmse object class.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -40,7 +45,6 @@ namespace Plugin.FileService.Abstractions
         /// </summary>
         /// <param name="byteArray"></param>
         /// <param name="fileName"></param>
-        /// <param name="path">Path string that points to the folder offset where to save the file.</param>
         /// <param name="contentFolder">Base folder to store the file.</param>
         /// <remarks>THe final path will be ContentFolder\Path\fileName</remarks>
         Task SaveFileAsync(byte[] byteArray, string fileName, string contentFolder = null);
@@ -121,6 +125,5 @@ namespace Plugin.FileService.Abstractions
         /// <param name="contentFolder"></param>
         /// <returns></returns>
         Task<bool> FileExistAsync(string fileName, string contentFolder = null);
-
     }
 }

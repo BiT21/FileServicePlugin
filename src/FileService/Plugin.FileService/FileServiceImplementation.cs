@@ -15,6 +15,7 @@ namespace Plugin.FileService
     {
 
 #if PORTABLE
+
         /// <summary>
         /// Directory.CreateDirectory
         /// </summary>
@@ -95,7 +96,7 @@ namespace Plugin.FileService
         /// <summary>
         /// File.Exists
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="filePath"></param>
         /// <returns></returns>
         protected override bool FileExists(string filePath)
         {
@@ -186,11 +187,17 @@ namespace Plugin.FileService
         /// <returns></returns>
         protected override string EnvironmentGetFolderPath()
         {
+            string ret;
 #if WINDOWS_UWP
-            return Windows.Storage.ApplicationData.Current.LocalFolder.Path;
+            
+            ret = Windows.Storage.ApplicationData.Current.LocalCacheFolder.Path;
 #else
-            return Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            ret =  Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            //return Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 #endif
+            Trace(ret);
+
+            return ret;
         }
 
         /// <summary>

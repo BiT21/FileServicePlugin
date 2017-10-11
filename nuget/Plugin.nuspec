@@ -45,15 +45,19 @@
   </metadata>
   <files>
       <!--Core-->
-      <file src="src\FileService\Plugin.FileService\bin\Release\Plugin.FileService.*" target="lib\portable-net45+wp80+win8+wpa81" />
+      <file src="..\src\FileService\Plugin.FileService\bin\Release\Plugin.FileService.*" target="lib\portable-net45+wp80+win8+wpa81" />
 
       <!--Xamarin.Android-->
-      <file src="src\FileService\Plugin.FileService.Android\bin\Release\Plugin.FileService.*" target="lib\MonoAndroid10" />
+      <file src="..\src\FileService\Plugin.FileService.Android\bin\Release\Plugin.FileService.*" target="lib\MonoAndroid10" />
  
       <!--Xamarin.iOS-->
-      <file src="src\FileService\Plugin.FileService.iOS\bin\iPhone\Release\Plugin.FileService.*" target="lib\Xamarin.iOS10" />
+      <file src="..\src\FileService\Plugin.FileService.iOS\bin\iPhone\Release\Plugin.FileService.*" target="lib\Xamarin.iOS10" />
        
       <!--UWP-->
-      <file src="src\FileService\Plugin.FileService.UWP\bin\Release\Plugin.FileService.*" target="lib\UAP10" />
+      <file src="..\src\FileService\Plugin.FileService.UWP\bin\Release\Plugin.FileService.*" target="lib\UAP10" />
+
+      <!--NET-->
+      <file src="..\src\FileService\Plugin.FileService.NET\bin\Release\Plugin.FileService.*" target="lib\net45" />
+
   </files>
 </package>

@@ -2,6 +2,7 @@
 using Plugin.FileService.Abstractions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -15,7 +16,8 @@ namespace Plugin.FileService
     /// </summary>
     public abstract class FileServiceBase : IFileService
     {
-        
+        public string RootFolder { get; set; }
+
         async Task IFileService.SaveObjectFileAsync<T>(string fileName, T content, string contentFolder )
         {
             await Task.Run(() =>
@@ -32,19 +34,19 @@ namespace Plugin.FileService
                     FileDelete(filePath);
                 }
 
-                DateTime dt = TraceCallOut("SaveAsync", "Saving data to : " + filePath);
+                //DateTime dt = TraceCallOut("SaveAsync", "Saving data to : " + filePath);
 
                 string result = JsonConvert.SerializeObject(content);
                 FileWriteAllText(filePath, result);
 
-                TraceCallReturn("Saving data to : " + filePath, dt);
+                //TraceCallReturn("Saving data to : " + filePath, dt);
 
             });
         }
 
         async Task<TResponse> IFileService.ReadObjectFileAsync<TResponse>(string fileName, string contentFolder)
         {
-            DateTime dt = TraceCallOut("LoadAsync", "Loading data from fileName : " + fileName);
+            //DateTime dt = TraceCallOut("LoadAsync", "Loading data from fileName : " + fileName);
             try
             {
                 return await Task.Run(() =>
@@ -57,26 +59,26 @@ namespace Plugin.FileService
 
                         if (result.Equals("{}") || string.IsNullOrWhiteSpace(result))
                         {
-                            TraceCallReturn("Exist. File empty : " + filePath, dt);
+                            //TraceCallReturn("Exist. File empty : " + filePath, dt);
                             return default(TResponse);
                         }
                         else
                         {
-                            TraceCallReturn("Exist. Retreive content: " + filePath, dt);
+                            //TraceCallReturn("Exist. Retreive content: " + filePath, dt);
                             return  JsonConvert.DeserializeObject<TResponse>(result);
                         }
                     }
                     else
                     {
-                        TraceCallReturn("Exist. File does not exist: " + fileName, dt);
+                        //TraceCallReturn("Exist. File does not exist: " + fileName, dt);
                         return default(TResponse);
                     }
                 });
             }
-            catch (Exception ex)
+            catch 
             {
 
-                TraceCallReturn("Error Exception loading " + fileName + "\n[" + ex.Message + "]", dt);
+                //TraceCallReturn("Error Exception loading " + fileName + "\n[" + ex.Message + "]", dt);
 
                 return default(TResponse);
             }
@@ -295,7 +297,10 @@ namespace Plugin.FileService
               
         private string GetPath(string folder=null, string fileName=null)
         {
-            var final = EnvironmentGetFolderPath();
+            if (string.IsNullOrWhiteSpace(RootFolder))
+                throw new ArgumentNullException("RootFolder", "Please set RootFolder to a value before making any call to FileService");
+
+            var final = Path.Combine(EnvironmentGetFolderPath(), RootFolder);
 
             final = string.IsNullOrWhiteSpace(folder) ? final : Path.Combine(final, folder);
 
@@ -337,6 +342,7 @@ namespace Plugin.FileService
         protected void Trace(string msg, [CallerMemberName] string func = "<Empty>")
         {
             //dbgService.TraceInfo(msg, TraceTag + func);
+            Debug.WriteLine($"{func} | {msg}");
         }
 
         /// <summary>
@@ -347,6 +353,7 @@ namespace Plugin.FileService
         protected void TraceVerbose(string msg, [CallerMemberName] string func = "<Empty>")
         {
             //dbgService.TraceVerbose(msg, TraceTag + func);
+            Trace(msg, func);
         }
 
         /// <summary>
@@ -357,6 +364,8 @@ namespace Plugin.FileService
         protected void TraceError(string msg, [CallerMemberName] string func = "<Empty>")
         {
             //dbgService.TraceError(msg, TraceTag + func);
+            Trace(msg, func);
+
         }
 
         /// <summary>
@@ -368,6 +377,8 @@ namespace Plugin.FileService
         protected void TraceError(string msg, Exception ex, [CallerMemberName] string func = "<Empty>")
         {
             //dbgService.TraceError(msg, ex, TraceTag + func);
+            Trace(msg +"\n\n" + ex.ToString(), func);
+
         }
 
         /// <summary>
@@ -377,11 +388,11 @@ namespace Plugin.FileService
         /// <param name="func"></param>
         /// <returns>Return the actual TimeDate.</returns>
         /// <remarks>The return is intended to be feeded into TraceCAllReturn to allow calculation of time laps.</remarks>
-        protected DateTime TraceCallOut(string msg, [CallerMemberName] string func = "<Empty>")
-        {
-            //return dbgService.TraceCallOut(func, TraceTag + func);
-            return DateTime.Now;
-        }
+        //protected DateTime TraceCallOut(string msg, [CallerMemberName] string func = "<Empty>")
+        //{
+        //    //return dbgService.TraceCallOut(func, TraceTag + func);
+        //    return DateTime.Now;
+        //}
 
         /// <summary>
         /// Starts a TraceCallOut/TraceCallReturn tracing.
@@ -389,10 +400,10 @@ namespace Plugin.FileService
         /// <param name="msg">Recomended it to feed the same string as TraceCallOut for a better read of the log.</param>
         /// <param name="dt">Feed the output of TraceCallOut to allow tracing the time laps between calls.</param>
         /// <param name="func"></param>
-        protected void TraceCallReturn(string msg, DateTime dt, [CallerMemberName] string func = "<Empty>")
-        {
-            //dbgService.TraceCallReturn(func, TraceTag + func, dt);
-        }
+        //protected void TraceCallReturn(string msg, DateTime dt, [CallerMemberName] string func = "<Empty>")
+        //{
+        //    //dbgService.TraceCallReturn(func, TraceTag + func, dt);
+        //}
 
         //////           Abstracts functions           //////              
         /// <summary>
@@ -508,6 +519,5 @@ namespace Plugin.FileService
         /// </summary>
         /// <param name="file"></param>
         protected abstract void FileSetAttributesNormal(string file);
-
     }
 }
