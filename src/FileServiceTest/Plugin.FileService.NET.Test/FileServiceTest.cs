@@ -17,10 +17,10 @@ namespace Plugin.FileService.NET.Test
         }
 
         [TestMethod]
-        public async Task TestMethod1()
+        public async Task SaveTextFileAsync_Test()
         {
             IFileService fileService = Plugin.FileService.CrossFileService.Current;
-            fileService.RootFolder = "Testingfolder";
+            fileService.InstanceTag = "Testingfolder";
 
             var filename = "filename";
             var content = "this is padding and a face set of string to test";
@@ -36,10 +36,5 @@ namespace Plugin.FileService.NET.Test
             Assert.AreEqual(content, ret);
         }
 
-        [TestMethod]
-        public void FileServiceTest_()
-        {
-
-        }
     }
 }

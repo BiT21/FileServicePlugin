@@ -12,7 +12,7 @@ namespace Plugin.FileService.Abstractions
         /// <summary>
         /// Holds the RootFolder for the FileService operations.
         /// </summary>
-        string RootFolder { get; set; }
+        string InstanceTag { get; set; }
 
         /// <summary>
         /// Read from file sistem the file expecting TResponmse object class.

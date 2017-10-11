@@ -16,7 +16,7 @@ namespace Plugin.FileService
     /// </summary>
     public abstract class FileServiceBase : IFileService
     {
-        public string RootFolder { get; set; }
+        public string InstanceTag { get; set; }
 
         async Task IFileService.SaveObjectFileAsync<T>(string fileName, T content, string contentFolder )
         {
@@ -292,10 +292,10 @@ namespace Plugin.FileService
               
         private string GetPath(string folder=null, string fileName=null)
         {
-            if (string.IsNullOrWhiteSpace(RootFolder))
-                throw new ArgumentNullException("RootFolder", "Please set RootFolder to a value before making any call to FileService");
+            if (string.IsNullOrWhiteSpace(InstanceTag))
+                throw new ArgumentNullException("InstanceTag", "Please set Plugin.FileService.CrossFileService.Current.InstanceTag to a value before making any call to FileService");
 
-            var final = Path.Combine(EnvironmentGetFolderPath(), RootFolder);
+            var final = Path.Combine(EnvironmentGetFolderPath(), "Plugin.FileService." + InstanceTag);
 
             final = string.IsNullOrWhiteSpace(folder) ? final : Path.Combine(final, folder);
 
