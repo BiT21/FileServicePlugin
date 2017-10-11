@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26923.0
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService", "FileService\Plugin.FileService\Plugin.FileService.csproj", "{A6FCEF44-D2BA-42C7-B3CB-13667BCD7B54}"
 EndProject
@@ -14,6 +14,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService.UWP", "FileService\Plugin.FileService.UWP\Plugin.FileService.UWP.csproj", "{E34B516D-C0D8-450F-9DB0-BB6A5B04AEF1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService.NET", "FileService\Plugin.FileService.NET\Plugin.FileService.NET.csproj", "{03B4204B-E4ED-4115-8A62-F952347D21D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{19B0F0C0-DEAC-4507-ACBD-0BEF329DB961}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.FileService.NET.Test", "FileServiceTest\Plugin.FileService.NET.Test\Plugin.FileService.NET.Test.csproj", "{04DC90B5-B684-4063-9F38-5C9F1D264143}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,9 +127,28 @@ Global
 		{03B4204B-E4ED-4115-8A62-F952347D21D0}.Release|x64.Build.0 = Release|Any CPU
 		{03B4204B-E4ED-4115-8A62-F952347D21D0}.Release|x86.ActiveCfg = Release|Any CPU
 		{03B4204B-E4ED-4115-8A62-F952347D21D0}.Release|x86.Build.0 = Release|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Debug|ARM.Build.0 = Debug|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Debug|x64.Build.0 = Debug|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Debug|x86.Build.0 = Debug|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Release|ARM.ActiveCfg = Release|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Release|ARM.Build.0 = Release|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Release|x64.ActiveCfg = Release|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Release|x64.Build.0 = Release|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Release|x86.ActiveCfg = Release|Any CPU
+		{04DC90B5-B684-4063-9F38-5C9F1D264143}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{04DC90B5-B684-4063-9F38-5C9F1D264143} = {19B0F0C0-DEAC-4507-ACBD-0BEF329DB961}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9202E129-A6FB-4AD0-97BD-756A895D4615}

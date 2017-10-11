@@ -80,7 +80,7 @@ namespace Plugin.FileService.Abstractions
         /// </summary>
         /// <param name="contentFolder"></param>
         /// <returns>The efective path is the system personal folder. To it we can add contentFolder</returns>
-        string GetPersonalPath(string contentFolder);
+        string GetFullPath(string contentFolder=null);
 
         /// <summary>
         /// Retreive the list of files from the given folder.

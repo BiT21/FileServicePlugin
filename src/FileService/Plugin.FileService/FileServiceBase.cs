@@ -22,12 +22,7 @@ namespace Plugin.FileService
         {
             await Task.Run(() =>
             {
-                var documentsPath = GetPath(contentFolder);
-
-                if (!DirectoryExists(documentsPath))
-                    DirectoryCreateDirectory(documentsPath);
-
-                var filePath = GetPath(contentFolder, fileName);
+                var filePath = GetAndCreatePath(contentFolder, fileName);
 
                 if (FileExists(filePath))
                 {
@@ -169,7 +164,7 @@ namespace Plugin.FileService
         {
             await Task.Run(() =>
             {
-                var filePath = GetPath(contentFolder, fileName);
+                var filePath = GetAndCreatePath(contentFolder, fileName);
 
                 if (string.IsNullOrWhiteSpace(contentFolder) && !DirectoryExists(contentFolder))
                 {
@@ -228,7 +223,7 @@ namespace Plugin.FileService
             });
         }
 
-        string IFileService.GetPersonalPath(string contentFolder)
+        string IFileService.GetFullPath(string contentFolder)
         {
             return GetPath(contentFolder);
         }
@@ -288,7 +283,7 @@ namespace Plugin.FileService
         {
             await Task.Run(() =>
             {
-                var path = GetPath(contentFolder, filename);
+                var path = GetAndCreatePath(contentFolder, filename);
                 Trace("Write: " + path);
 
                 FileWriteAllText(path, data);
@@ -307,6 +302,16 @@ namespace Plugin.FileService
             final = string.IsNullOrWhiteSpace(fileName) ? final : Path.Combine(final, fileName);
 
             return final;
+        }
+
+        private string GetAndCreatePath(string folder=null, string fileName = null)
+        {
+            var folderPath = GetPath(folder);
+
+            if (!DirectoryExists(folderPath))
+                DirectoryCreateDirectory(folderPath);
+
+            return GetPath(folder, fileName);
         }
 
         private bool FileExist(string fileName, string contentFolder)
