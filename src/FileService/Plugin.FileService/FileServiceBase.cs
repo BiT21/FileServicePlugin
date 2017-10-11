@@ -16,7 +16,7 @@ namespace Plugin.FileService
     /// </summary>
     public abstract class FileServiceBase : IFileService
     {
-        public string InstanceTag { get; set; }
+        public string SandboxTag { get; set; }
 
         async Task IFileService.SaveObjectFileAsync<T>(string fileName, T content, string contentFolder )
         {
@@ -31,7 +31,7 @@ namespace Plugin.FileService
 
                 //DateTime dt = TraceCallOut("SaveAsync", "Saving data to : " + filePath);
 
-                string result = JsonConvert.SerializeObject(content);
+                string result = JsonConvert.SerializeObject(content,Formatting.Indented);
                 FileWriteAllText(filePath, result);
 
                 //TraceCallReturn("Saving data to : " + filePath, dt);
@@ -118,22 +118,25 @@ namespace Plugin.FileService
         {
             await Task.Run(() => 
             {
+                if (string.IsNullOrWhiteSpace(folderName))
+                    throw new ArgumentNullException("folderName", "Please specify a folder to delete");
+
                 var folderPath = GetPath(folderName);
 
-                if (DirectoryExists(folderPath))
-                {
-                    string[] files = DirectoryGetFiles(folderPath);
-                    foreach (string file in files)
-                    {
-                        FileSetAttributesNormal(file);
-                        FileDelete(file);
-                    }
-                    DirectoryDelete(folderPath, true);
-
-                    Trace("DeleteFolder: " + folderPath);
-                }
+                DeleteFolder(folderName);                
             });
             
+        }
+
+        async Task IFileService.DeleteSandbox()
+        {
+            await Task.Run(() => 
+            {
+                var root = GetPath();
+
+                DeleteFolder(root);
+
+            });
         }
         
         async Task<bool> IFileService.ExistRecentCacheAsync(string fileName, int cacheTime, string contentFolder )
@@ -292,10 +295,10 @@ namespace Plugin.FileService
               
         private string GetPath(string folder=null, string fileName=null)
         {
-            if (string.IsNullOrWhiteSpace(InstanceTag))
-                throw new ArgumentNullException("InstanceTag", "Please set Plugin.FileService.CrossFileService.Current.InstanceTag to a value before making any call to FileService");
+            if (string.IsNullOrWhiteSpace(SandboxTag))
+                throw new ArgumentNullException("SandboxTag", "Please set Plugin.FileService.CrossFileService.Current.SandboxTag to a value before making any call to FileService");
 
-            var final = Path.Combine(EnvironmentGetFolderPath(), "Plugin.FileService." + InstanceTag);
+            var final = Path.Combine(EnvironmentGetFolderPath(), "Plugin.FileService." + SandboxTag);
 
             final = string.IsNullOrWhiteSpace(folder) ? final : Path.Combine(final, folder);
 
@@ -336,6 +339,22 @@ namespace Plugin.FileService
                 return ret;
 
         }
+        private void DeleteFolder(string folderPath)
+        {
+            Trace("DeleteFolder: " + folderPath);
+
+            if (DirectoryExists(folderPath))
+            {
+                string[] files = DirectoryGetFiles(folderPath);
+                foreach (string file in files)
+                {
+                    FileSetAttributesNormal(file);
+                    FileDelete(file);
+                }
+                DirectoryDelete(folderPath, true);
+            }
+        }
+
 
         //////           Tracing           //////
         const string TRACETAG = "FileService.";

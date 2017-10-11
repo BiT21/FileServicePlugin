@@ -10,9 +10,9 @@ namespace Plugin.FileService.Abstractions
   public interface IFileService
   {
         /// <summary>
-        /// Holds the RootFolder for the FileService operations.
+        /// Holds the Sandbox identifier for all FileService operations.
         /// </summary>
-        string InstanceTag { get; set; }
+        string SandboxTag { get; set; }
 
         /// <summary>
         /// Read from file sistem the file expecting TResponmse object class.
@@ -88,6 +88,12 @@ namespace Plugin.FileService.Abstractions
         /// <param name="contentFolder"></param>
         /// <returns></returns>
         Task<List<string>> GetFilesNamesAsync(string contentFolder = null);
+
+        /// <summary>
+        /// Delete the content of the Sandobox managed by FileService.Current
+        /// </summary>
+        /// <returns></returns>
+        Task DeleteSandbox();
 
         /// <summary>
         /// Delete the entier folder.
