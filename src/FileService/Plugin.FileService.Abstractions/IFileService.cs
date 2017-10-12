@@ -30,15 +30,23 @@ namespace Plugin.FileService.Abstractions
         /// <param name="contentFolder"></param>
         /// <returns>the string content of the file.</returns>
         Task<string> ReadTextFileAsync(string filename, string contentFolder = null);
+        
+        /// <summary>
+        /// Read a byteArry from fileName in contentFolder.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="contentFolder"></param>
+        /// <returns></returns>
+        Task<byte[]> ReadByteFileAsync(string fileName, string contentFolder = null);
 
         /// <summary>
         /// Save a text file to disk.
         /// </summary>
-        /// <param name="filename"></param>
         /// <param name="content"></param>
+        /// <param name="filename"></param>
         /// <param name="contentFolder"></param>
         /// <returns></returns>
-        Task SaveTextFileAsync(string filename, string content, string contentFolder = null);
+        Task SaveTextFileAsync(string content, string filename, string contentFolder = null);
 
         /// <summary>
         /// Save byteArray for file.
@@ -47,33 +55,18 @@ namespace Plugin.FileService.Abstractions
         /// <param name="fileName"></param>
         /// <param name="contentFolder">Base folder to store the file.</param>
         /// <remarks>THe final path will be ContentFolder\Path\fileName</remarks>
-        Task SaveFileAsync(byte[] byteArray, string fileName, string contentFolder = null);
+        Task SaveByteFileAsync(byte[] byteArray, string fileName, string contentFolder = null);
 
         /// <summary>
         /// Save to file system the T object content to contentFolder\fileName
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="fileName"></param>
         /// <param name="content"></param>
+        /// <param name="fileName"></param>
         /// <param name="contentFolder"></param>
         /// <returns></returns>
         /// <remarks>If file exist it will be overwriten.</remarks>
-        Task SaveObjectFileAsync<T>(string fileName, T content, string contentFolder = null);
-
-        /// <summary>
-        /// Save content to the file in the sytem temp folder.
-        /// </summary>
-        /// <param name="byteArray"></param>
-        /// <param name="fileName"></param>
-        Task SaveFileTemporalAsync(byte[] byteArray, string fileName);
-
-        /// <summary>
-        /// Read a byteArry from fileName in contentFolder.
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="contentFolder"></param>
-        /// <returns></returns>
-        Task<byte[]> ReadByteFileAsync(string fileName, string contentFolder);
+        Task SaveObjectFileAsync<T>(T content, string fileName, string contentFolder = null);
 
         /// <summary>
         /// Retreive the root folder where the plugin saves files.
@@ -93,7 +86,7 @@ namespace Plugin.FileService.Abstractions
         /// Delete the content of the Sandobox managed by FileService.Current
         /// </summary>
         /// <returns></returns>
-        Task DeleteSandbox();
+        Task DeleteSandboxAsync();
 
         /// <summary>
         /// Delete the entier folder.
@@ -116,13 +109,19 @@ namespace Plugin.FileService.Abstractions
         Task DeleteFilesAsync(string contentFolder = null);
 
         /// <summary>
+        /// Check if the sandbox exists.
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> ExistSandBoxAsync();
+
+        /// <summary>
         /// Check if file exist since longer than the given cacheTime in Hours.
         /// </summary>
         /// <param name="fileName"></param>
-        /// <param name="cacheTime">In hours</param>
+        /// <param name="cacheValidPeriod">Period through witch cache is valid.</param>
         /// <param name="contentFolder"></param>
         /// <returns></returns>
-        Task<bool> ExistRecentCacheAsync(string fileName, int cacheTime, string contentFolder = null);
+        Task<bool> ExistRecentCacheAsync(string fileName, TimeSpan cacheValidPeriod, string contentFolder = null);
 
         /// <summary>
         /// Check if contentFolder\fileName exists.
@@ -130,6 +129,13 @@ namespace Plugin.FileService.Abstractions
         /// <param name="fileName"></param>
         /// <param name="contentFolder"></param>
         /// <returns></returns>
-        Task<bool> FileExistAsync(string fileName, string contentFolder = null);
+        Task<bool> ExistFileAsync(string fileName, string contentFolder = null);
+
+        /// <summary>
+        /// Check if the folder exists in sandbox
+        /// </summary>
+        /// <param name="contentFolder"></param>
+        /// <returns></returns>
+        Task<bool> ExistFolderAsync(string contentFolder);
     }
 }

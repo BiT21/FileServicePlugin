@@ -104,11 +104,21 @@ namespace Plugin.FileService
         }
 
         /// <summary>
-        /// File.GetCreationTime
+        /// File.GetLastWriteTime
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        protected override DateTime FileGetCreationTime(string filePath)
+        protected override DateTime FileGetLastWriteTime(string filePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// File.SetLastWriteTime
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        protected override void FileSetLastWriteTime(string filePath, DateTime dateTime)
         {
             throw new NotImplementedException();
         }
@@ -162,11 +172,6 @@ namespace Plugin.FileService
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// File.WriteAllText
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="result"></param>
         protected override void FileWriteAllText(string filePath, string result)
         {
             throw new NotImplementedException();
@@ -195,8 +200,6 @@ namespace Plugin.FileService
             ret =  Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             //return Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 #endif
-            Trace(ret);
-
             return ret;
         }
 
@@ -288,13 +291,25 @@ namespace Plugin.FileService
         }
 
         /// <summary>
-        /// File.GetCreationTime
+        /// File.GetLastWriteTime
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        protected override DateTime FileGetCreationTime(string filePath)
+        protected override DateTime FileGetLastWriteTime(string filePath)
         {
-            return System.IO.File.GetCreationTime(filePath);
+            //return System.IO.File.GetCreationTime(filePath);
+            return System.IO.File.GetLastWriteTime(filePath);
+        }
+
+        /// <summary>
+        /// File.SetLastWriteTime
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="dateTime"></param>
+        protected override void FileSetLastWriteTime(string filePath, DateTime dateTime)
+        {
+            //System.IO.File.SetCreationTime(filePath, dateTime);
+            System.IO.File.SetLastWriteTime(filePath, dateTime);
         }
 
         /// <summary>
