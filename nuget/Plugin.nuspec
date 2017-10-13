@@ -7,7 +7,7 @@
     <owners>Raul G Dibildos</owners>
     <licenseUrl>https://github.com/BiT21/FileServicePlugin/blob/Starting/LICENSE</licenseUrl>
     <projectUrl>https://github.com/BiT21/FileServicePlugin</projectUrl>
-    <iconUrl>https://github.com/BiT21/FileServicePlugin/blob/Starting/art/icon.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/BiT21/FileServicePlugin/develop/art/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
         Easily have file system access from shared code using a common interface. Used by other plugins like JsonCache.
