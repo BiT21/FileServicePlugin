@@ -31,7 +31,9 @@ The original design stands that the application will be working with a single sa
 Thefore the initialization will stand:
 ```csharp
 IFileService fileService = FileService.CrossFileService.Current;
-fileService.SandboxTag = SANDBOX_TAG;
+fileService.SandboxTag = "MySandBoxTag";
+
+string filename = "MyFilename";
 string content = "This is the content I need to save in a text file";
 
 //Create file and save content.
@@ -50,7 +52,7 @@ await fileService.DeleteSandboxAsync();
 Assert.IsFalse(await fileService.ExistSandBoxAsync());
 ```
 
-#### Roadmap
+### Roadmap
 Planning to extend the plugin with
 
 * Multi sandbox
@@ -61,14 +63,15 @@ Sandbox will be created
 
 |Platform|Path|
 | ------------------- | :------------------ |
-iOS         |Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);|
-Xamarin.Android     |Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);|
-Windows_UWP |Windows.Storage.ApplicationData.Current.LocalCacheFolder.Path;|
+Xamarin.iOS|Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);|
+Xamarin.Android|Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);|
+UWP|Windows.Storage.ApplicationData.Current.LocalCacheFolder.Path;|
+dotnet|Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);|
  
-#### Contributions
+### Contributions
 Contributions are welcome! If you find a bug please report it and if you want a feature please report it.
 
 If you want to contribute code please file an issue and create a branch off of the current dev branch and file a pull request.
 
-#### License
+### License
 Under MIT, see LICENSE file.
