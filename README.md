@@ -28,7 +28,7 @@ This tag translates to a folder on the device FileSystem.
 
 The original design stands that the application will be working with a single sandbox. This will change in future releases.
 
-Thefore the initialization will stand:
+Therefore a simple use sample could be :
 ```csharp
 IFileService fileService = FileService.CrossFileService.Current;
 fileService.SandboxTag = "MySandBoxTag";
@@ -47,7 +47,7 @@ Assert.AreEqual(content, text);
 await fileService.DeleteFileAsync(filename);
 Assert.IsFalse(await fileService.ExistFileAsync(filename));
 
-//Delete sandbox
+//Delete all the content in the sandbox
 await fileService.DeleteSandboxAsync();
 Assert.IsFalse(await fileService.ExistSandBoxAsync());
 ```
