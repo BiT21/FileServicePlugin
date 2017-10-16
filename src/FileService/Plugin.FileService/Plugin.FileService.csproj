@@ -42,7 +42,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrossEncryptDecrypt.cs" />
     <Compile Include="CrossFileService.cs" />
+    <Compile Include="EncryptDecriptBase.cs" />
+    <Compile Include="EncryptDecryptImplementation.cs" />
     <Compile Include="FileServiceBase.cs" />
     <Compile Include="FileServiceImplementation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
