@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Linq;
-using Plugin.EncryptDecrypt;
+using Plugin.EncryptDecrypt.Abstractions;
 
 namespace Plugin.FileService.NET.Test
 {

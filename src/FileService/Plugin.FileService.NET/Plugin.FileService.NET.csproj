@@ -44,17 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Plugin.FileService\CrossEncryptDecrypt.cs">
-      <Link>CrossEncryptDecrypt.cs</Link>
-    </Compile>
     <Compile Include="..\Plugin.FileService\CrossFileService.cs">
       <Link>CrossFileService.cs</Link>
-    </Compile>
-    <Compile Include="..\Plugin.FileService\EncryptDecriptBase.cs">
-      <Link>EncryptDecriptBase.cs</Link>
-    </Compile>
-    <Compile Include="..\Plugin.FileService\EncryptDecryptImplementation.cs">
-      <Link>EncryptDecryptImplementation.cs</Link>
     </Compile>
     <Compile Include="..\Plugin.FileService\FileServiceBase.cs">
       <Link>FileServiceBase.cs</Link>
