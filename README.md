@@ -3,7 +3,7 @@
 A simple way to create a file system sandbox where your aplication will be able to save information, Text, Objects or Byte[].
 
 ### Setup
-* Available on NuGet: http://www.nuget.org/packages/TBD [![NuGet](https://img.shields.io/nuget/v/Xam.Plugin.DeviceInfo.svg?label=NuGet)](https://www.nuget.org/packages/TBD/)
+* Available on NuGet: https://www.nuget.org/packages/BiT21.Xam.Plugin.FileService/ [![NuGet](https://img.shields.io/nuget/v/Xam.Plugin.DeviceInfo.svg?label=NuGet)](https://www.nuget.org/packages/TBD/)
 * Install into your PCL/netstandard project and Client projects.
 
 **Platform Support**
