@@ -54,7 +54,7 @@ Assert.IsFalse(await fileService.ExistSandBoxAsync());
 Planning to extend the plugin with
 
 * Multi sandbox
-* Encrypted storage. 
+* Encrypted storage. On Test proyect you have a sample to use FileService in combination wth BiT21.EncryptDecrypt to protect file data.
 
 ### Platform specifics
 Sandbox will be created 
