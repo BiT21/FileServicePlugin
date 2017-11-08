@@ -11,10 +11,10 @@ namespace Plugin.FileService.NET.Test
 
     public class Helper
     {
-        const string text = "012345678";
+        const string TEXT = "012345678";
         public static byte[] GetByteArray()
         {
-            return text.Select(c => Convert.ToByte(c)).ToArray();
+            return TEXT.Select(c => Convert.ToByte(c)).ToArray();
         }
     }
 
@@ -33,25 +33,26 @@ namespace Plugin.FileService.NET.Test
 
         public static SimpleObject GetObject()
         {
-            var o = new SimpleObject();
+            var name = Guid.NewGuid().ToString();
+            var number = Convert.ToInt32(Regex.Replace(name, @"[^0-9]+", string.Empty).Substring(0, 5));
 
-            o.name = Guid.NewGuid().ToString();
-            o.number = Convert.ToInt32(Regex.Replace(o.name, @"[^0-9]+", string.Empty).Substring(0, 5));
-            o.dateTime = DateTime.Now.AddMinutes(o.number);
-
-            return o;
+            return new SimpleObject
+            {
+                name = name,
+                number = number,
+                dateTime = DateTime.Now.AddMinutes(number)
+            };
         }
         public static List<SimpleObject> GetObjectList()
         {
-            var list = new List<SimpleObject>();
-
-            list.Add(GetObject());
-            list.Add(GetObject());
-            list.Add(GetObject());
-            list.Add(GetObject());
-            list.Add(GetObject());
-
-            return list;
+            return new List<SimpleObject>
+            {
+                GetObject(),
+                GetObject(),
+                GetObject(),
+                GetObject(),
+                GetObject()
+            };
         }
 
         // override object.Equals

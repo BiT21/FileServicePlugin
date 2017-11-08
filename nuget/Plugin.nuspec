@@ -12,40 +12,40 @@
     <description>
         Easily have file system access from shared code using a common interface. Used by other plugins like JsonCache.
     </description>
-    <releaseNotes>.</releaseNotes>
-    <summary>Easily have file system access from shared code using a common interface.</summary>
+    <releaseNotes>Moved Linked files to Shared Proyect. Move Plugin.FileService.Abstraction from PCL to .NetStandard.</releaseNotes>
+    <summary>File system access from cross platform code.</summary>
     <tags>xamarin, pcl, xam.cpl, file system, file service, android, ios, windows, uwp, xamarin.forms</tags>
     <copyright>Copyright 2017</copyright>
     <dependencies>
       <group targetFramework="net">
-            <dependency id="Newtonsoft.Json" version="10.0.3" />
+            <dependency id="Newtonsoft.Json" version="8.0.3" />
        </group>
        <group targetFramework="win">
-              <dependency id="Newtonsoft.Json" version="10.0.3" />       
+              <dependency id="Newtonsoft.Json" version="8.0.3" />       
        </group>      
        <group targetFramework="netstandard1.0">
-                <dependency id="Newtonsoft.Json" version="10.0.3" />         
+                <dependency id="Newtonsoft.Json" version="8.0.3" />         
        </group>
        <group targetFramework="MonoAndroid10">
-             <dependency id="Newtonsoft.Json" version="10.0.3" />        
+             <dependency id="Newtonsoft.Json" version="8.0.3" />        
        </group>
        <group targetFramework="Xamarin.iOS10">
-             <dependency id="Newtonsoft.Json" version="10.0.3" />       
+             <dependency id="Newtonsoft.Json" version="8.0.3" />       
        </group>       
        <group targetFramework="portable-net45+win+wpa81+wp80">
-             <dependency id="Newtonsoft.Json" version="10.0.3" />       
+             <dependency id="Newtonsoft.Json" version="8.0.3" />       
        </group>
        <group targetFramework="uap">
-             <dependency id="Newtonsoft.Json" version="10.0.3" />      
+             <dependency id="Newtonsoft.Json" version="8.0.3" />      
        </group>
        <group targetFramework="dotnet">
-             <dependency id="Newtonsoft.Json" version="10.0.3" />             
+             <dependency id="Newtonsoft.Json" version="8.0.3" />             
        </group>
     </dependencies>
   </metadata>
   <files>
       <!--Core-->
-      <file src="..\src\FileService\Plugin.FileService\bin\Release\Plugin.FileService.*" target="lib\portable-net45+wp80+win8+wpa81" />
+      <!--<file src="..\src\FileService\Plugin.FileService\bin\Release\Plugin.FileService.*" target="lib\portable-net45+wp80+win8+wpa81" />-->
 
       <!--Xamarin.Android-->
       <file src="..\src\FileService\Plugin.FileService.Android\bin\Release\Plugin.FileService.*" target="lib\MonoAndroid10" />

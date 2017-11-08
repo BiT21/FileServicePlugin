@@ -28,11 +28,7 @@ namespace Plugin.FileService
 
     static IFileService CreateFileService()
     {
-#if PORTABLE
-        return null;
-#else
         return new FileServiceImplementation();
-#endif
     }
 
     internal static Exception NotImplementedInReferenceAssembly()

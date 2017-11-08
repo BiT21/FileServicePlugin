@@ -114,7 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Plugin.FileService.Abstractions\Plugin.FileService.Abstractions.csproj">
-      <Project>{6edb0588-ffc5-4ef5-8a99-9e241d0f878d}</Project>
+      <Project>{91ecb03b-35d6-4265-9079-131ef06fc624}</Project>
       <Name>Plugin.FileService.Abstractions</Name>
     </ProjectReference>
   </ItemGroup>

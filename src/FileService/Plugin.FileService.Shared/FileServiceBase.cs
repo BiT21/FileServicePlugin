@@ -16,6 +16,9 @@ namespace Plugin.FileService
     /// </summary>
     public abstract class FileServiceBase : IFileService
     {
+        /// <summary>
+        /// Holds the Sandbox identifier for all FileService operations.
+        /// </summary>
         public string SandboxTag { get; set; }
 
         async Task IFileService.SaveObjectFileAsync<T>(T content, string fileName, string contentFolder)
@@ -296,9 +299,7 @@ namespace Plugin.FileService
             });
         }
 
-        ///
         //////           Privates           //////
-        /// 
 
         private string GetPath(string folder = null, string fileName = null)
         {
@@ -368,9 +369,7 @@ namespace Plugin.FileService
             }
         }
 
-        ///
         //////           Testing           //////
-        ///         
 
         /// <summary>
         /// For Testing Perposes only. Set the 
@@ -378,6 +377,7 @@ namespace Plugin.FileService
         /// <param name="dateTime"></param>
         /// <param name="fileName"></param>
         /// <param name="contentFolder"></param>
+        /// <remark>For testing purposes.</remark>
         public async Task SetCacheCreation(DateTime dateTime, string fileName, string contentFolder = null)
         {
             await Task.Run(() =>
@@ -386,6 +386,13 @@ namespace Plugin.FileService
                 FileSetLastWriteTime(path, dateTime);
             });
         }
+        /// <summary>
+        /// Returns the date when the Cache file was last updated. 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="contentFolder"></param>
+        /// <returns>File last update date</returns>
+        /// <remark>For testing purposes.</remark>
         public async Task<DateTime> GetCacheCreation(string fileName, string contentFolder = null)
         {
             DateTime dt = DateTime.MinValue;
@@ -399,9 +406,7 @@ namespace Plugin.FileService
             return dt;
         }
 
-        ///
         //////           Tracing           //////
-        /// 
 
         const string TRACETAG = "FileService.";
         /// <summary>
@@ -451,33 +456,7 @@ namespace Plugin.FileService
 
         }
 
-        /// <summary>
-        /// Starts a TraceCallOut/TraceCallReturn tracing.
-        /// </summary>
-        /// <param name="msg"></param>
-        /// <param name="func"></param>
-        /// <returns>Return the actual TimeDate.</returns>
-        /// <remarks>The return is intended to be feeded into TraceCAllReturn to allow calculation of time laps.</remarks>
-        //protected DateTime TraceCallOut(string msg, [CallerMemberName] string func = "<Empty>")
-        //{
-        //    //return dbgService.TraceCallOut(func, TraceTag + func);
-        //    return DateTime.Now;
-        //}
-
-        /// <summary>
-        /// Starts a TraceCallOut/TraceCallReturn tracing.
-        /// </summary>
-        /// <param name="msg">Recomended it to feed the same string as TraceCallOut for a better read of the log.</param>
-        /// <param name="dt">Feed the output of TraceCallOut to allow tracing the time laps between calls.</param>
-        /// <param name="func"></param>
-        //protected void TraceCallReturn(string msg, DateTime dt, [CallerMemberName] string func = "<Empty>")
-        //{
-        //    //dbgService.TraceCallReturn(func, TraceTag + func, dt);
-        //}
-
-        ///
         //////           Abstracts functions           //////
-        /// 
         
         /// <summary>
         /// File.GetCreationTime

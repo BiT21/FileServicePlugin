@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace Plugin.FileService.Abstractions
 {
-  /// <summary>
-  /// Interface for FileService
-  /// </summary>
-  public interface IFileService
-  {
+    /// <summary>
+    /// Interface for FileService
+    /// </summary>
+    public interface IFileService
+    {
         /// <summary>
         /// Holds the Sandbox identifier for all FileService operations.
         /// </summary>
@@ -30,7 +30,7 @@ namespace Plugin.FileService.Abstractions
         /// <param name="contentFolder"></param>
         /// <returns>the string content of the file.</returns>
         Task<string> ReadTextFileAsync(string filename, string contentFolder = null);
-        
+
         /// <summary>
         /// Read a byteArry from fileName in contentFolder.
         /// </summary>
@@ -73,7 +73,7 @@ namespace Plugin.FileService.Abstractions
         /// </summary>
         /// <param name="contentFolder"></param>
         /// <returns>The efective path is the system personal folder. To it we can add contentFolder</returns>
-        string GetFullPath(string contentFolder=null);
+        string GetFullPath(string contentFolder = null);
 
         /// <summary>
         /// Retreive the list of files from the given folder.

@@ -7,8 +7,8 @@
     <ProjectGuid>{03B4204B-E4ED-4115-8A62-F952347D21D0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Plugin.FileService.NET</RootNamespace>
-    <AssemblyName>Plugin.FileService.NET</AssemblyName>
+    <RootNamespace>Plugin.FileService</RootNamespace>
+    <AssemblyName>Plugin.FileService</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -47,13 +47,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Plugin.FileService.Abstractions\Plugin.FileService.Abstractions.csproj">
-      <Project>{6edb0588-ffc5-4ef5-8a99-9e241d0f878d}</Project>
-      <Name>Plugin.FileService.Abstractions</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Plugin.FileService.Abstractions\Plugin.FileService.Abstractions.csproj">
+      <Project>{91ecb03b-35d6-4265-9079-131ef06fc624}</Project>
+      <Name>Plugin.FileService.Abstractions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\Plugin.FileService.Shared\Plugin.FileService.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
