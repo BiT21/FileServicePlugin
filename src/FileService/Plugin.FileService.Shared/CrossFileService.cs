@@ -8,7 +8,7 @@ namespace Plugin.FileService
   /// </summary>
   public class CrossFileService
   {
-    static Lazy<IFileService> Implementation = new Lazy<IFileService>(() => CreateFileService(), System.Threading.LazyThreadSafetyMode.PublicationOnly);
+    static Lazy<IFileService> implementation = new Lazy<IFileService>(() => CreateFileService(), System.Threading.LazyThreadSafetyMode.PublicationOnly);
 
     /// <summary>
     /// Current settings to use
@@ -17,7 +17,7 @@ namespace Plugin.FileService
     {
       get
       {
-         var ret = Implementation.Value;
+         var ret = implementation.Value;
         if (ret == null)
         {
           throw NotImplementedInReferenceAssembly();

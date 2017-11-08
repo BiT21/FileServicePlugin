@@ -109,15 +109,6 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Plugin.FileService\CrossFileService.cs">
-      <Link>CrossFileService.cs</Link>
-    </Compile>
-    <Compile Include="..\Plugin.FileService\FileServiceBase.cs">
-      <Link>FileServiceBase.cs</Link>
-    </Compile>
-    <Compile Include="..\Plugin.FileService\FileServiceImplementation.cs">
-      <Link>FileServiceImplementation.cs</Link>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Plugin.FileService.UWP.rd.xml" />
   </ItemGroup>
@@ -127,6 +118,7 @@
       <Name>Plugin.FileService.Abstractions</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\Plugin.FileService.Shared\Plugin.FileService.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
