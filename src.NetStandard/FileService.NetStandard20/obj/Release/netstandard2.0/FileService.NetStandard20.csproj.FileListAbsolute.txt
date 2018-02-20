@@ -1,9 +1,0 @@
-C:\code\github\FileServicePlugin\src\FileService\FileService.NetStandard20\bin\Release\netstandard2.0\FileService.NetStandard20.deps.json
-C:\code\github\FileServicePlugin\src\FileService\FileService.NetStandard20\bin\Release\netstandard2.0\FileService.NetStandard20.dll
-C:\code\github\FileServicePlugin\src\FileService\FileService.NetStandard20\bin\Release\netstandard2.0\FileService.NetStandard20.pdb
-C:\code\github\FileServicePlugin\src\FileService\FileService.NetStandard20\obj\Release\netstandard2.0\FileService.NetStandard20.csprojResolveAssemblyReference.cache
-C:\code\github\FileServicePlugin\src\FileService\FileService.NetStandard20\obj\Release\netstandard2.0\FileService.NetStandard20.csproj.CoreCompileInputs.cache
-C:\code\github\FileServicePlugin\src\FileService\FileService.NetStandard20\obj\Release\netstandard2.0\FileService.NetStandard20.AssemblyInfoInputs.cache
-C:\code\github\FileServicePlugin\src\FileService\FileService.NetStandard20\obj\Release\netstandard2.0\FileService.NetStandard20.AssemblyInfo.cs
-C:\code\github\FileServicePlugin\src\FileService\FileService.NetStandard20\obj\Release\netstandard2.0\FileService.NetStandard20.dll
-C:\code\github\FileServicePlugin\src\FileService\FileService.NetStandard20\obj\Release\netstandard2.0\FileService.NetStandard20.pdb
