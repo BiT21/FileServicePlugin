@@ -7,7 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace FileService.NetStandard20
+namespace FileServiceNS
 {
 	public class FileService : IFileService
 	{

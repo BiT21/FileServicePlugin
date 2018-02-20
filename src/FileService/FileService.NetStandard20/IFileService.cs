@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FileService.NetStandard20
+namespace FileServiceNS
 {
 	/// <summary>
 	/// Interface for FileService

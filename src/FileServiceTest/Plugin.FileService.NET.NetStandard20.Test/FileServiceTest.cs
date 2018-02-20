@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Linq;
 using Plugin.EncryptDecrypt.Abstractions;
-using FileService.NetStandard20;
+using FileServiceNS;
 using System.Diagnostics;
 
-namespace FileService.NetStandard20.Test
+namespace FileServiceNS.Test
 {
     [TestClass]
     public class FileServiceTest
