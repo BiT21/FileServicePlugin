@@ -214,7 +214,7 @@ namespace FileServiceNS.Test
         [TestMethod]
         public async Task ReadObjectFileAsync_FileDoNotExist_Test()
         {
-            var ret = await fileService.ReadObjectFileAsync<List<SimpleObject>>("dasdasd");
+            var ret = await fileService.ReadObjectFileAsync<List<SimpleObject>>("Dummy text");
             Assert.IsNull(ret);
         }
 
