@@ -1,0 +1,2 @@
+C:\code\github\FileServicePlugin\src\FileServiceTest\Plugin.FileService.NET.NetStandard20.Test\obj\Debug\Plugin.FileService.NET.NetStandard20.Test.csprojResolveAssemblyReference.cache
+C:\code\github\FileServicePlugin\src\FileServiceTest\Plugin.FileService.NET.NetStandard20.Test\obj\Debug\Plugin.FileService.NET.NetStandard20.Test.csproj.CoreCompileInputs.cache

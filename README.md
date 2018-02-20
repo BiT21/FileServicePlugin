@@ -1,5 +1,12 @@
 ## File Service Plugin for Xamarin and Windows
 
+>
+> Library version 2.0 has been published. This nuget contais .Net Standard version of this FileService logic.
+> New code at src.NetStandard.
+> NugetID -> [BiT21.FileService](https://www.nuget.org/packages/BiT21.FileService/) [![NuGet](https://img.shields.io/nuget/v/Xam.Plugin.DeviceInfo.svg?label=NuGet)](https://www.nuget.org/packages/Bit21.FileService/)
+>
+> Pending to update this README to reference the new code.
+>
 A simple way to create a file system sandbox where your aplication will be able to save information, Text, Objects or Byte[].
 
 ### Setup
