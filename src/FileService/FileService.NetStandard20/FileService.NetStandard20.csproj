@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>BiT21.FileService</PackageId>
+    <VersionPrefix>2.0.1</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
+    <Authors>Raul G Dibildos</Authors>
+    <Company>BiT21</Company>
+    <Product>FileService</Product>
+    <Copyright>Copyright 2018</Copyright>
+    <PackageLicenseUrl>https://github.com/BiT21/FileServicePlugin/blob/Starting/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/BiT21/FileServicePlugin</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/BiT21/FileServicePlugin/develop/art/icon.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/BiT21/FileServicePlugin</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>xamarin, pcl, xam.cpl, file system, service, android, ios, windows, uwp, xamarin.forms</PackageTags>
+    <Description>Easily have file system access from shared code using a common interface. Used by other plugins like JsonCache.</Description>
+    <PackageReleaseNotes>Moved Linked files to Shared Proyect. Move Plugin.FileService.Abstraction from PCL to .NetStandard</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+</Project>
