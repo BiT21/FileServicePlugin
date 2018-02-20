@@ -15,7 +15,7 @@ namespace FileServiceNS
 		string SandboxTag { get; set; }
 
 		/// <summary>
-		/// Read from file system the file expecting TResponmse object class.
+		/// Read from file system the file expecting TResponse object class.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="fileName"></param>
@@ -32,7 +32,7 @@ namespace FileServiceNS
 		Task<string> ReadTextFileAsync(string filename, string contentFolder = null);
 
 		/// <summary>
-		/// Read a byteArry from fileName in contentFolder.
+		/// Read a byteArray from fileName in contentFolder.
 		/// </summary>
 		/// <param name="fileName"></param>
 		/// <param name="contentFolder"></param>
@@ -69,27 +69,27 @@ namespace FileServiceNS
 		Task SaveObjectFileAsync<T>(T content, string fileName, string contentFolder = null);
 
 		/// <summary>
-		/// Retreive the root folder where the plugin saves files.
+		/// Retrieve the root folder where the plugin saves files.
 		/// </summary>
 		/// <param name="contentFolder"></param>
-		/// <returns>The efective path is the system personal folder. To it we can add contentFolder</returns>
+		/// <returns>The effective path is the system personal folder. To it we can add contentFolder</returns>
 		string GetFullPath(string contentFolder = null);
 
 		/// <summary>
-		/// Retreive the list of files from the given folder.
+		/// Retrieve the list of files from the given folder.
 		/// </summary>
 		/// <param name="contentFolder"></param>
 		/// <returns></returns>
 		Task<List<string>> GetFilesNamesAsync(string contentFolder = null);
 
 		/// <summary>
-		/// Delete the content of the Sandobox managed by FileService.Current
+		/// Delete the content of the Sandbox managed by FileService.Current
 		/// </summary>
 		/// <returns></returns>
 		Task DeleteSandboxAsync();
 
 		/// <summary>
-		/// Delete the entier folder.
+		/// Delete the entire folder.
 		/// </summary>
 		/// <param name="folderName"></param>
 		Task DeleteFolderAsync(string folderName);

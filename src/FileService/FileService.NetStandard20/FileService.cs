@@ -54,7 +54,7 @@ namespace FileServiceNS
 						}
 						else
 						{
-							//TraceCallReturn("Exist. Retreive content: " + filePath, dt);
+							//TraceCallReturn("Exist. Retrieve content: " + filePath, dt);
 							return JsonConvert.DeserializeObject<TResponse>(result);
 						}
 					}
@@ -331,7 +331,7 @@ namespace FileServiceNS
 
 			if (string.IsNullOrEmpty(fileName))
 			{
-				TraceVerbose("NotFound as fileName is null or emtpy");
+				TraceVerbose("NotFound as fileName is null or empty");
 				ret = false;
 			}
 			else
