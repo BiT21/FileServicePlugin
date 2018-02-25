@@ -366,6 +366,18 @@ namespace FileServiceNS.Test
         }
 
         [TestMethod]
+        public async Task ExistFolderAsync_Method()
+        {
+            var ret = await fileService.ExistFolderAsync(string.Empty);
+
+            Assert.IsFalse(ret);
+
+            ret = await fileService.ExistFolderAsync(null);
+
+            Assert.IsFalse(ret);
+        }
+
+        [TestMethod]
         public async Task ExistRecentCacheAsync_Test()
         {
             var fs = (FileService)fileService;

@@ -216,15 +216,18 @@ namespace FileServiceNS
 			return ret;
 		}
 
-		async Task<bool> IFileService.ExistFolderAsync(string contentFolder)
+		async Task<bool> IFileService.ExistFolderAsync(string folder)
 		{
-			if (string.IsNullOrWhiteSpace(contentFolder))
-				return false;
+            if (string.IsNullOrWhiteSpace(folder))
+            {
+                TraceError("Folder may not be null or empty.");
+                return false;
+            }
 
 			var ret = false;
 			await Task.Run(() =>
 			{
-				ret = ExistFolder(contentFolder);
+				ret = ExistFolder(folder);
 			});
 
 			return ret;
@@ -290,7 +293,6 @@ namespace FileServiceNS
 				File.WriteAllText(path, data);
 			});
 		}
-
 
 		//////           Privates           //////
 
