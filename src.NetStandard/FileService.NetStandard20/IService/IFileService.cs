@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FileServiceNS
+namespace BiT21.FileService.IService
 {
 	/// <summary>
 	/// Interface for FileService

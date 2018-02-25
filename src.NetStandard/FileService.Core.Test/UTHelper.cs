@@ -6,15 +6,15 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace FileServiceNS.Test
+namespace BiT21.FileService.Test
 {
 
     public class Helper
     {
-        const string text = "012345678";
+        const string TEXT = "012345678";
         public static byte[] GetByteArray()
         {
-            return text.Select(c => Convert.ToByte(c)).ToArray();
+            return TEXT.Select(c => Convert.ToByte(c)).ToArray();
         }
     }
 
@@ -33,9 +33,10 @@ namespace FileServiceNS.Test
 
         public static SimpleObject GetObject()
         {
-            var o = new SimpleObject();
-
-            o.name = Guid.NewGuid().ToString();
+            var o = new SimpleObject
+            {
+                name = Guid.NewGuid().ToString()
+            };
             o.number = Convert.ToInt32(Regex.Replace(o.name, @"[^0-9]+", string.Empty).Substring(0, 5));
             o.dateTime = DateTime.Now.AddMinutes(o.number);
 
@@ -43,13 +44,14 @@ namespace FileServiceNS.Test
         }
         public static List<SimpleObject> GetObjectList()
         {
-            var list = new List<SimpleObject>();
-
-            list.Add(GetObject());
-            list.Add(GetObject());
-            list.Add(GetObject());
-            list.Add(GetObject());
-            list.Add(GetObject());
+            var list = new List<SimpleObject>
+            {
+                GetObject(),
+                GetObject(),
+                GetObject(),
+                GetObject(),
+                GetObject()
+            };
 
             return list;
         }

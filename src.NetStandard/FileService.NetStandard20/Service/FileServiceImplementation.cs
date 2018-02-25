@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BiT21.FileService.IService;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,10 +8,16 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace FileServiceNS
+namespace BiT21.FileService.Service
 {
-	public class FileService : IFileService
+    /// <summary>
+    /// Class implementation of the <see cref="IFileService"/> abstraction.
+    /// </summary>
+	public class FileServiceImplementation : IFileService
 	{
+        /// <summary>
+        /// Property to define the sandbox folder where this FileService instance will work on.
+        /// </summary>
 		public string SandboxTag { get; set; }
 
 		async Task IFileService.SaveObjectFileAsync<T>(T content, string fileName, string contentFolder)
@@ -387,7 +394,14 @@ namespace FileServiceNS
 				File.SetLastWriteTime(path, dateTime);
 			});
 		}
-		public async Task<DateTime> GetCacheCreation(string fileName, string contentFolder = null)
+
+        /// <summary>
+        /// Retrieve when the file was last written.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="contentFolder"></param>
+        /// <returns></returns>
+        public async Task<DateTime> GetCacheCreation(string fileName, string contentFolder = null)
 		{
 			DateTime dt = DateTime.MinValue;
 
@@ -402,7 +416,8 @@ namespace FileServiceNS
 
 		//////           Tracing           //////
 
-		const string TRACETAG = "FileService.";
+		const string TRACETAG = "FileService";
+
 		/// <summary>
 		/// Trace msg using func to format the trace output.
 		/// </summary>

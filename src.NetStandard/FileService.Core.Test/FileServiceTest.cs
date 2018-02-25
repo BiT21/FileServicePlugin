@@ -5,12 +5,16 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Linq;
-using FileServiceNS;
 using System.Diagnostics;
+
 using BiT21.EncryptDecryptLib.IService;
 using BiT21.EncryptDecryptLib.Service;
 
-namespace FileServiceNS.Test
+using BiT21.FileService.IService;
+using BiT21.FileService.Service;
+
+
+namespace BiT21.FileService.Test
 {
     [TestClass]
     public class FileServiceTest
@@ -26,11 +30,12 @@ namespace FileServiceNS.Test
         [TestInitialize]
         public void Setup()
         {
-			fileService = new FileService();
+            fileService = new Service.FileServiceImplementation
+            {
+                SandboxTag = SANDBOX_TAG
+            };
 
-			fileService.SandboxTag = SANDBOX_TAG;
-
-			encryptedDecrypt = new EncryptDecrypt();
+            encryptedDecrypt = new EncryptDecrypt();
         }
 
         [TestCleanup]
@@ -380,7 +385,7 @@ namespace FileServiceNS.Test
         [TestMethod]
         public async Task ExistRecentCacheAsync_Test()
         {
-            var fs = (FileService)fileService;
+            var fs = fileService as FileServiceImplementation;
             var filename = "ExistRecentCacheAsync_Filename";
             var safeoffsetSeconds = 2;
             var hoursOffset = 2;

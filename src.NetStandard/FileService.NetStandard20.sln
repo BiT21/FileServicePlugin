@@ -1,10 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileService.NetStandard20", "FileService.NetStandard20\FileService.NetStandard20.csproj", "{3C7801C0-95D4-441B-B5CB-0648599F1BAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BiT21.FileService", "FileService.NetStandard20\BiT21.FileService.csproj", "{3C7801C0-95D4-441B-B5CB-0648599F1BAF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileService.NetStandard20.Test", "FileService.Core.Test\FileService.NetStandard20.Test.csproj", "{34C38581-8B19-4468-9239-194BA34E048A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BiT21.FileService.Test", "FileService.Core.Test\BiT21.FileService.Test.csproj", "{34C38581-8B19-4468-9239-194BA34E048A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
