@@ -22,31 +22,37 @@ namespace BiT21.FileService.Test
 		
         const string SANDBOX_TAG = "TestingSandBox";
         const string TEXT_PADDING = "Testing text used to confirm that FileService works saving and reading text files. \naba29448-a930-4df7-9195-a9340b0ce6a0";
-		IFileService fileService;
+		static IFileService fileService;
 
         const string PASSWORD = "password1234";
-        IEncryptDecrypt encryptedDecrypt;
+        static IEncryptDecrypt encryptedDecrypt;
 
-        [TestInitialize]
-        public void Setup()
+        [ClassInitialize]
+        public static void ClassSetup(TestContext testContext)
         {
-            fileService = new Service.FileServiceImplementation
-            {
-                SandboxTag = SANDBOX_TAG
-            };
+            //fileService = new Service.FileServiceImplementation
+            //{
+            //    SandboxTag = SANDBOX_TAG
+            //};
+
+            fileService = CrossFileService.Current;
 
             encryptedDecrypt = new EncryptDecrypt();
         }
 
-        [TestCleanup]
-        public async Task CleanUp()
+        [TestInitialize]
+        public async Task Setup()
         {
-            Trace.WriteLine();
             fileService.SandboxTag = SANDBOX_TAG;
             await fileService.DeleteSandboxAsync();
             Assert.IsFalse(await fileService.ExistSandBoxAsync());
         }
 
+        [TestCleanup]
+        public async Task CleanUp()
+        {
+
+        }
 
         [TestMethod]
         public async Task Save_Read_TextFileAsync_Test()
