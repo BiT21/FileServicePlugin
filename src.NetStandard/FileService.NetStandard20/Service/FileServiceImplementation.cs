@@ -57,14 +57,14 @@ namespace BiT21.FileService.Service
         /// <param name="specialFolder"></param>
         public FileServiceImplementation(string sandboxTag, Environment.SpecialFolder specialFolder) 
         {
-            this.sandboxTag = sandboxTag;
-
-            this.rootFolder = Environment.GetFolderPath(specialFolder) ;
-
             try
             {
+                this.sandboxTag = sandboxTag;
+
+                this.rootFolder = Environment.GetFolderPath(specialFolder, Environment.SpecialFolderOption.Create);
+                
                 //This will throw if the final folder is not correct.
-                var finalRootFolder = GetPath();
+                var finalRootFolder = GetAndCreatePath();
 
                 this.TraceVerbose($"Created file service for sandbox folder : {finalRootFolder}");
             }

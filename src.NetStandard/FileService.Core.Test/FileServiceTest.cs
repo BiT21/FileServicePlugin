@@ -40,17 +40,16 @@ namespace BiT21.FileService.Test
             encryptedDecrypt = new EncryptDecrypt();
         }
 
+        [ClassCleanup]
+        public static void ClassCleanUP()
+        {
+            fileService.DeleteSandboxAsync().Wait();
+        }
+
         [TestInitialize]
         public async Task Setup()
         {
-            await fileService.DeleteSandboxAsync();
-            Assert.IsFalse(await fileService.ExistSandBoxAsync());
-        }
-
-        [TestCleanup]
-        public async Task CleanUp()
-        {
-
+            await fileService.DeleteFilesAsync();
         }
 
         [ExpectedException(typeof(ArgumentException))]
@@ -70,6 +69,13 @@ namespace BiT21.FileService.Test
             var expectedPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BiT21.FileService", SANDBOX_TAG);
 
             Assert.AreEqual(expectedPath, folder);
+        }
+
+        [TestMethod]
+        public void Ctor_Creates_Root_Folder()
+        {
+            IFileService fs = new FileServiceImplementation(SANDBOX_TAG, Environment.SpecialFolder.MyDocuments);
+            Assert.IsTrue( fs.ExistSandBoxAsync().Result);
         }
 
         [TestMethod]
