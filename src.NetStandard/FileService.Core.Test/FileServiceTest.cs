@@ -12,7 +12,7 @@ using BiT21.EncryptDecryptLib.Service;
 
 using BiT21.FileService.IService;
 using BiT21.FileService.Service;
-
+using System.IO;
 
 namespace BiT21.FileService.Test
 {
@@ -35,7 +35,7 @@ namespace BiT21.FileService.Test
             //    SandboxTag = SANDBOX_TAG
             //};
 
-            fileService = CrossFileService.Current;
+            fileService = new FileServiceImplementation(SANDBOX_TAG);
 
             encryptedDecrypt = new EncryptDecrypt();
         }
@@ -43,7 +43,6 @@ namespace BiT21.FileService.Test
         [TestInitialize]
         public async Task Setup()
         {
-            fileService.SandboxTag = SANDBOX_TAG;
             await fileService.DeleteSandboxAsync();
             Assert.IsFalse(await fileService.ExistSandBoxAsync());
         }
@@ -52,6 +51,25 @@ namespace BiT21.FileService.Test
         public async Task CleanUp()
         {
 
+        }
+
+        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
+        public void Ctor_Thow_On_Wrong_sandboxTag_Test()
+        {
+            new FileServiceImplementation(">*");
+        }
+
+        [TestMethod]
+        public void Ctor_Use_EnvironmentSpecialFolder()
+        {
+            IFileService fs = new FileServiceImplementation(SANDBOX_TAG, Environment.SpecialFolder.MyDocuments);
+
+            var folder = fs.GetFullPath();
+
+            var expectedPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BiT21.FileService", SANDBOX_TAG);
+
+            Assert.AreEqual(expectedPath, folder);
         }
 
         [TestMethod]
@@ -186,6 +204,12 @@ namespace BiT21.FileService.Test
         public async Task Read_ByteFileAsync_Object_FileNotExist_Test()
         {
             Assert.AreEqual(default(byte[]), await fileService.ReadByteFileAsync("fakename5634"));
+        }
+
+        [TestMethod]
+        public async Task Read_ByteFileAsync_ReturnEmpty_On_Wrong_Path_Test()
+        {
+            Assert.AreEqual(default(byte[]),await fileService.ReadByteFileAsync("fakename5634", ">*"));
         }
 
         [TestMethod]
@@ -425,12 +449,19 @@ namespace BiT21.FileService.Test
             Assert.AreEqual(0, ret.Count);
         }
 
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof(Exception))]
         [TestMethod]
-        public void GetFullPathEmpty_Test()
+        public void SandboxTag_Set_Throw_On_Already_Set_Test()
         {
             fileService.SandboxTag = string.Empty;
-            var ret = fileService.GetFullPath();
+        }
+
+        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
+        public void GetFullPath_Throw_On_SandboxTag_NotSet_Test()
+        {
+            IFileService fs = new FileServiceImplementation(string.Empty);
+            var ret = fs.GetFullPath();
         }
 
         [TestMethod]

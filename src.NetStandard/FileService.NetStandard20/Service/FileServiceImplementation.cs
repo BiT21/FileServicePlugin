@@ -15,385 +15,433 @@ namespace BiT21.FileService.Service
     /// </summary>
 	public class FileServiceImplementation : IFileService, IFileService4Testing
     {
+        private string sandboxTag;
+        private readonly string rootFolder;
+        const Environment.SpecialFolder DEFAULT_ENVIRONMENT_SPECIALFOLDER = Environment.SpecialFolder.LocalApplicationData;
+
         /// <summary>
         /// Property to define the sandbox folder where this FileService instance will work on.
         /// </summary>
-		public string SandboxTag { get; set; }
+		public string SandboxTag {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(sandboxTag))
+                {
+                    throw new ArgumentNullException("SandboxTag");
+                }
+                return sandboxTag;
+            }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(sandboxTag))
+                {
+                    throw new Exception("SandboxTag already set to a value");
+                }
+                sandboxTag = value;
+            }
+        }
 
-		async Task IFileService.SaveObjectFileAsync<T>(T content, string fileName, string contentFolder)
-		{
-			await Task.Run(() =>
-			{
-				var filePath = GetAndCreatePath(contentFolder, fileName);
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="sandboxTag"></param>
+        public FileServiceImplementation(string sandboxTag) : 
+            this(sandboxTag,DEFAULT_ENVIRONMENT_SPECIALFOLDER)
+        {
+        }
 
-				if (File.Exists(filePath))
-				{
-					File.Delete(filePath);
-				}
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="sandboxTag"></param>
+        /// <param name="specialFolder"></param>
+        public FileServiceImplementation(string sandboxTag, Environment.SpecialFolder specialFolder) 
+        {
+            this.sandboxTag = sandboxTag;
 
-				//DateTime dt = TraceCallOut("SaveAsync", "Saving data to : " + filePath);
+            this.rootFolder = Environment.GetFolderPath(specialFolder) ;
 
-				string result = JsonConvert.SerializeObject(content, Formatting.Indented);
-				File.WriteAllText(filePath, result);
+            try
+            {
+                //This will throw if the final folder is not correct.
+                var finalRootFolder = GetPath();
 
-				//TraceCallReturn("Saving data to : " + filePath, dt);
+                this.TraceVerbose($"Created file service for sandbox folder : {finalRootFolder}");
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Please check sandboxTag that do not contain invalid characters or that the Environment.SpecialFolder used is supported on your platform.", ex);
+            }
+        }
 
-			});
-		}
+        async Task IFileService.SaveObjectFileAsync<T>(T content, string fileName, string contentFolder)
+        {
+            await Task.Run(() =>
+            {
+                var filePath = GetAndCreatePath(contentFolder, fileName);
 
-		async Task<TResponse> IFileService.ReadObjectFileAsync<TResponse>(string fileName, string contentFolder)
-		{
-			//DateTime dt = TraceCallOut("LoadAsync", "Loading data from fileName : " + fileName);
-			try
-			{
-				return await Task.Run(() =>
-				{
-					if (ExistsFile(fileName, contentFolder))
-					{
-						var filePath = GetPath(contentFolder, fileName);
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
 
-						string result = File.ReadAllText(filePath);
+                //DateTime dt = TraceCallOut("SaveAsync", "Saving data to : " + filePath);
 
-						if (string.IsNullOrWhiteSpace(result) || result.Equals("[]") || result.Equals("null"))
-						{
-							//TraceCallReturn("Exist. File empty : " + filePath, dt);
-							return default(TResponse);
-						}
-						else
-						{
-							//TraceCallReturn("Exist. Retrieve content: " + filePath, dt);
-							return JsonConvert.DeserializeObject<TResponse>(result);
-						}
-					}
-					else
-					{
-						//TraceCallReturn("Exist. File does not exist: " + fileName, dt);
-						return default(TResponse);
-					}
-				});
-			}
-			catch
-			{
+                string result = JsonConvert.SerializeObject(content, Formatting.Indented);
+                File.WriteAllText(filePath, result);
 
-				//TraceCallReturn("Error Exception loading " + fileName + "\n[" + ex.Message + "]", dt);
+                //TraceCallReturn("Saving data to : " + filePath, dt);
 
-				return default(TResponse);
-			}
-		}
+            });
+        }
 
-		async Task IFileService.DeleteFilesAsync(string contentFolder)
-		{
-			await Task.Run(() =>
-			{
-				var documentsPath = GetPath(contentFolder);
+        async Task<TResponse> IFileService.ReadObjectFileAsync<TResponse>(string fileName, string contentFolder)
+        {
+            //DateTime dt = TraceCallOut("LoadAsync", "Loading data from fileName : " + fileName);
+            try
+            {
+                return await Task.Run(() =>
+                {
+                    if (ExistsFile(fileName, contentFolder))
+                    {
+                        var filePath = GetPath(contentFolder, fileName);
 
-				if (Directory.Exists(documentsPath))
-				{
-					string[] files = Directory.GetFiles(documentsPath);
-					foreach (string file in files)
-					{
-						TraceVerbose("Deleting : " + file);
+                        string result = File.ReadAllText(filePath);
 
-						File.SetAttributes(file, FileAttributes.Normal);
-						File.Delete(file);
-					}
-				}
-			});
-		}
+                        if (string.IsNullOrWhiteSpace(result) || result.Equals("[]") || result.Equals("null"))
+                        {
+                            //TraceCallReturn("Exist. File empty : " + filePath, dt);
+                            return default(TResponse);
+                        }
+                        else
+                        {
+                            //TraceCallReturn("Exist. Retrieve content: " + filePath, dt);
+                            return JsonConvert.DeserializeObject<TResponse>(result);
+                        }
+                    }
+                    else
+                    {
+                        //TraceCallReturn("Exist. File does not exist: " + fileName, dt);
+                        return default(TResponse);
+                    }
+                });
+            }
+            catch
+            {
 
-		async Task IFileService.DeleteFileAsync(string fileName, string contentFolder)
-		{
-			await Task.Run(() =>
-			{
-				var filePath = GetPath(contentFolder, fileName);
+                //TraceCallReturn("Error Exception loading " + fileName + "\n[" + ex.Message + "]", dt);
 
-				if (File.Exists(filePath))
-				{
-					File.Delete(filePath);
+                return default(TResponse);
+            }
+        }
 
-					Trace("Delete: " + filePath);
-				}
-			});
-		}
+        async Task IFileService.DeleteFilesAsync(string contentFolder)
+        {
+            await Task.Run(() =>
+            {
+                var documentsPath = GetPath(contentFolder);
 
-		async Task IFileService.DeleteFolderAsync(string folderName)
-		{
-			await Task.Run(() =>
-			{
-				if (string.IsNullOrWhiteSpace(folderName))
-					throw new ArgumentNullException("folderName", "Please specify a folder to delete");
+                if (Directory.Exists(documentsPath))
+                {
+                    string[] files = Directory.GetFiles(documentsPath);
+                    foreach (string file in files)
+                    {
+                        TraceVerbose("Deleting : " + file);
 
-				var folderPath = GetPath(folderName);
+                        File.SetAttributes(file, FileAttributes.Normal);
+                        File.Delete(file);
+                    }
+                }
+            });
+        }
 
-				DeleteFolder(folderPath);
-			});
+        async Task IFileService.DeleteFileAsync(string fileName, string contentFolder)
+        {
+            await Task.Run(() =>
+            {
+                var filePath = GetPath(contentFolder, fileName);
 
-		}
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
 
-		async Task IFileService.DeleteSandboxAsync()
-		{
-			await Task.Run(() =>
-			{
-				var root = GetPath();
+                    Trace("Delete: " + filePath);
+                }
+            });
+        }
 
-				DeleteFolder(root);
+        async Task IFileService.DeleteFolderAsync(string folderName)
+        {
+            await Task.Run(() =>
+            {
+                if (string.IsNullOrWhiteSpace(folderName))
+                    throw new ArgumentNullException("folderName", "Please specify a folder to delete");
 
-			});
-		}
+                var folderPath = GetPath(folderName);
 
-		async Task<bool> IFileService.ExistRecentCacheAsync(string fileName, TimeSpan cacheValidTime, string contentFolder)
-		{
-			bool ret = false;
+                DeleteFolder(folderPath);
+            });
 
-			await Task.Run(() =>
-			{
-				var filePath = GetPath(contentFolder, fileName);
-				DateTime creationTime = DateTime.MinValue;
+        }
 
-				if (File.Exists(filePath))
-				{
-					creationTime = File.GetLastWriteTime(filePath);
+        async Task IFileService.DeleteSandboxAsync()
+        {
+            await Task.Run(() =>
+            {
+                var root = GetPath();
 
-					ret = (creationTime + cacheValidTime) > DateTime.Now;
-				}
-				else
-				{
-					ret = false;
-				}
+                DeleteFolder(root);
 
-				Trace($"ExistRecentCache: [{ret.ToString().ToUpper()}] {creationTime}+{cacheValidTime} > {DateTime.Now} {filePath}");
-			});
-			return ret;
-		}
+            });
+        }
 
-		async Task IFileService.SaveByteFileAsync(byte[] byteArray, string fileName, string contentFolder)
-		{
-			await Task.Run(() =>
-			{
-				var filePath = GetAndCreatePath(contentFolder, fileName);
+        async Task<bool> IFileService.ExistRecentCacheAsync(string fileName, TimeSpan cacheValidTime, string contentFolder)
+        {
+            bool ret = false;
 
-				Trace("SaveFile: " + filePath);
+            await Task.Run(() =>
+            {
+                var filePath = GetPath(contentFolder, fileName);
+                DateTime creationTime = DateTime.MinValue;
 
-				File.WriteAllBytes(filePath, byteArray);
-			});
+                if (File.Exists(filePath))
+                {
+                    creationTime = File.GetLastWriteTime(filePath);
 
-		}
+                    ret = (creationTime + cacheValidTime) > DateTime.Now;
+                }
+                else
+                {
+                    ret = false;
+                }
 
-		async Task<byte[]> IFileService.ReadByteFileAsync(string fileName, string contentFolder)
-		{
-			return await Task.Run<byte[]>(() =>
-			{
-				var filePath = GetPath(contentFolder, fileName);
+                Trace($"ExistRecentCache: [{ret.ToString().ToUpper()}] {creationTime}+{cacheValidTime} > {DateTime.Now} {filePath}");
+            });
+            return ret;
+        }
 
-				try
-				{
+        async Task IFileService.SaveByteFileAsync(byte[] byteArray, string fileName, string contentFolder)
+        {
+            await Task.Run(() =>
+            {
+                var filePath = GetAndCreatePath(contentFolder, fileName);
 
-					byte[] dataBytes = null;
+                Trace("SaveFile: " + filePath);
 
-					if (File.Exists(filePath))
-					{
-						dataBytes = File.ReadAllBytes(filePath);
-						return dataBytes;
-					}
-					else
-						return default(byte[]);
-				}
-				catch (Exception ex)
-				{
-					TraceError("Saving to :" + filePath, ex);
-					return default(byte[]);
-				}
-			});
-		}
+                File.WriteAllBytes(filePath, byteArray);
+            });
 
-		string IFileService.GetFullPath(string contentFolder)
-		{
-			return GetPath(contentFolder);
-		}
+        }
 
-		async Task<bool> IFileService.ExistFileAsync(string fileName, string contentFolder)
-		{
-			bool ret = false;
+        async Task<byte[]> IFileService.ReadByteFileAsync(string fileName, string contentFolder)
+        {
+            return await Task.Run<byte[]>(() =>
+            {
+                string filePath= string.Empty;
 
-			await Task.Run(() =>
-			{
-				ret = ExistsFile(fileName, contentFolder);
-			});
+                try
+                {
+                    filePath = GetPath(contentFolder, fileName);
 
-			return ret;
-		}
+                    byte[] dataBytes = null;
 
-		async Task<bool> IFileService.ExistFolderAsync(string folder)
-		{
+                    if (File.Exists(filePath))
+                    {
+                        dataBytes = File.ReadAllBytes(filePath);
+                        return dataBytes;
+                    }
+                    else
+                        return default(byte[]);
+                }
+                catch (Exception ex)
+                {
+                    TraceError("Saving to :" + filePath, ex);
+                    return default(byte[]);
+                }
+            });
+        }
+
+        string IFileService.GetFullPath(string contentFolder)
+        {
+            return GetPath(contentFolder);
+        }
+
+        async Task<bool> IFileService.ExistFileAsync(string fileName, string contentFolder)
+        {
+            bool ret = false;
+
+            await Task.Run(() =>
+            {
+                ret = ExistsFile(fileName, contentFolder);
+            });
+
+            return ret;
+        }
+
+        async Task<bool> IFileService.ExistFolderAsync(string folder)
+        {
             if (string.IsNullOrWhiteSpace(folder))
             {
                 TraceError("Folder may not be null or empty.");
                 return false;
             }
 
-			var ret = false;
-			await Task.Run(() =>
-			{
-				ret = ExistFolder(folder);
-			});
+            var ret = false;
+            await Task.Run(() =>
+            {
+                ret = ExistFolder(folder);
+            });
 
-			return ret;
-		}
+            return ret;
+        }
 
-		async Task<bool> IFileService.ExistSandBoxAsync()
-		{
-			var ret = false;
-			await Task.Run(() =>
-			{
-				ret = ExistFolder(string.Empty);
-			});
+        async Task<bool> IFileService.ExistSandBoxAsync()
+        {
+            var ret = false;
+            await Task.Run(() =>
+            {
+                ret = ExistFolder(string.Empty);
+            });
 
-			return ret;
-		}
+            return ret;
+        }
 
-		async Task<List<string>> IFileService.GetFilesNamesAsync(string contentFolder)
-		{
-			return await Task.Run(() =>
-			{
-				var documentsPath = GetPath(contentFolder);
+        async Task<List<string>> IFileService.GetFilesNamesAsync(string contentFolder)
+        {
+            return await Task.Run(() =>
+            {
+                var documentsPath = GetPath(contentFolder);
 
-				if (Directory.Exists(documentsPath))
-				{
-					var files = Directory.GetFiles(documentsPath).Select(f => f.Split('/').LastOrDefault());
-					return files.ToList();
-				}
-				else
-					return new List<string>();
-			});
-		}
+                if (Directory.Exists(documentsPath))
+                {
+                    var files = Directory.GetFiles(documentsPath).Select(f => f.Split('/').LastOrDefault());
+                    return files.ToList();
+                }
+                else
+                    return new List<string>();
+            });
+        }
 
-		async Task<string> IFileService.ReadTextFileAsync(string filename, string contentFolder)
-		{
-			var ret = string.Empty;
-			await Task.Run(async () =>
-			{
-				var path = GetPath(contentFolder, filename);
+        async Task<string> IFileService.ReadTextFileAsync(string filename, string contentFolder)
+        {
+            var ret = string.Empty;
+            await Task.Run(async () =>
+            {
+                var path = GetPath(contentFolder, filename);
 
-				if (!File.Exists(path))
-				{
-					ret = string.Empty;
-				}
-				else
-				{
-					Trace("Load: " + path);
+                if (!File.Exists(path))
+                {
+                    ret = string.Empty;
+                }
+                else
+                {
+                    Trace("Load: " + path);
 
-					using (StreamReader sr = File.OpenText(path))
-						ret = await sr.ReadToEndAsync();
-				}
-			});
+                    using (StreamReader sr = File.OpenText(path))
+                        ret = await sr.ReadToEndAsync();
+                }
+            });
 
-			return ret;
-		}
+            return ret;
+        }
 
-		async Task IFileService.SaveTextFileAsync(string data, string filename, string contentFolder)
-		{
-			await Task.Run(() =>
-			{
-				var path = GetAndCreatePath(contentFolder, filename);
-				Trace("Write: " + path);
+        async Task IFileService.SaveTextFileAsync(string data, string filename, string contentFolder)
+        {
+            await Task.Run(() =>
+            {
+                var path = GetAndCreatePath(contentFolder, filename);
+                Trace("Write: " + path);
 
-				File.WriteAllText(path, data);
-			});
-		}
+                File.WriteAllText(path, data);
+            });
+        }
 
-		//////           Privates           //////
+        //////           Privates           //////
 
-		private string EnvironmentGetFolderPath()
-		{
-			string ret;
-			ret = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-			return ret;
-		}
+        private string GetPath(string folder = null, string fileName = null)
+        {
+            if (string.IsNullOrWhiteSpace(SandboxTag))
+                throw new ArgumentNullException("SandboxTag", "Please set Plugin.FileService.CrossFileService.Current.SandboxTag to a value before making any call to FileService");
 
-		private string GetPath(string folder = null, string fileName = null)
-		{
-			if (string.IsNullOrWhiteSpace(SandboxTag))
-				throw new ArgumentNullException("SandboxTag", "Please set Plugin.FileService.CrossFileService.Current.SandboxTag to a value before making any call to FileService");
+            var final = Path.Combine(rootFolder, "BiT21.FileService", SandboxTag);
 
-			var final = Path.Combine(EnvironmentGetFolderPath(), "Plugin.FileService." + SandboxTag);
+            final = string.IsNullOrWhiteSpace(folder) ? final : Path.Combine(final, folder);
 
-			final = string.IsNullOrWhiteSpace(folder) ? final : Path.Combine(final, folder);
+            final = string.IsNullOrWhiteSpace(fileName) ? final : Path.Combine(final, fileName);
 
-			final = string.IsNullOrWhiteSpace(fileName) ? final : Path.Combine(final, fileName);
+            return Path.GetFullPath(final);
+        }
 
-			return final;
-		}
+        private string GetAndCreatePath(string folder = null, string fileName = null)
+        {
+            var folderPath = GetPath(folder);
 
-		private string GetAndCreatePath(string folder = null, string fileName = null)
-		{
-			var folderPath = GetPath(folder);
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
 
-			if (!Directory.Exists(folderPath))
-				Directory.CreateDirectory(folderPath);
+            return GetPath(folder, fileName);
+        }
 
-			return GetPath(folder, fileName);
-		}
+        private bool ExistsFile(string fileName, string contentFolder)
+        {
+            bool ret;
 
-		private bool ExistsFile(string fileName, string contentFolder)
-		{
-			bool ret;
+            if (string.IsNullOrEmpty(fileName))
+            {
+                TraceVerbose("NotFound as fileName is null or empty");
+                ret = false;
+            }
+            else
+            {
+                var filePath = GetPath(contentFolder, fileName);
 
-			if (string.IsNullOrEmpty(fileName))
-			{
-				TraceVerbose("NotFound as fileName is null or empty");
-				ret = false;
-			}
-			else
-			{
-				var filePath = GetPath(contentFolder, fileName);
+                ret = File.Exists(filePath);
 
-				ret = File.Exists(filePath);
+                TraceVerbose((ret ? "Found: " : "Does Not Exist: ") + filePath);
+            }
 
-				TraceVerbose((ret ? "Found: " : "Does Not Exist: ") + filePath);
-			}
+            return ret;
+        }
 
-			return ret;
-		}
+        private bool ExistFolder(string folderName)
+        {
+            var path = GetPath(folderName);
 
-		private bool ExistFolder(string folderName)
-		{
-			var path = GetPath(folderName);
+            return Directory.Exists(path);
+        }
 
-			return Directory.Exists(path);
-		}
+        private void DeleteFolder(string folderPath)
+        {
+            Trace("DeleteFolder: " + folderPath);
 
-		private void DeleteFolder(string folderPath)
-		{
-			Trace("DeleteFolder: " + folderPath);
+            if (Directory.Exists(folderPath))
+            {
+                string[] files = Directory.GetFiles(folderPath);
+                foreach (string file in files)
+                {
+                    File.SetAttributes(file, FileAttributes.Normal);
+                    File.Delete(file);
+                }
+                Directory.Delete(folderPath, true);
+            }
+        }
 
-			if (Directory.Exists(folderPath))
-			{
-				string[] files = Directory.GetFiles(folderPath);
-				foreach (string file in files)
-				{
-					File.SetAttributes(file, FileAttributes.Normal);
-					File.Delete(file);
-				}
-				Directory.Delete(folderPath, true);
-			}
-		}
+        //////           Testing           //////
 
-		//////           Testing           //////
-
-		/// <summary>
-		/// For Testing Perposes only. Set the 
-		/// </summary>
-		/// <param name="dateTime"></param>
-		/// <param name="fileName"></param>
-		/// <param name="contentFolder"></param>
-		async Task IFileService4Testing.SetCacheCreation(DateTime dateTime, string fileName, string contentFolder = null)
-		{
-			await Task.Run(() =>
-			{
-				var path = GetPath(fileName, contentFolder);
-				File.SetLastWriteTime(path, dateTime);
-			});
-		}
+        /// <summary>
+        /// For Testing Purposes only. Set the 
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="fileName"></param>
+        /// <param name="contentFolder"></param>
+        async Task IFileService4Testing.SetCacheCreation(DateTime dateTime, string fileName, string contentFolder)
+        {
+            await Task.Run(() =>
+            {
+                var path = GetPath(fileName, contentFolder);
+                File.SetLastWriteTime(path, dateTime);
+            });
+        }
 
         /// <summary>
         /// Retrieve when the file was last written.
@@ -401,69 +449,62 @@ namespace BiT21.FileService.Service
         /// <param name="fileName"></param>
         /// <param name="contentFolder"></param>
         /// <returns></returns>
-        async Task<DateTime> IFileService4Testing.GetCacheCreation(string fileName, string contentFolder = null)
-		{
-			DateTime dt = DateTime.MinValue;
+        async Task<DateTime> IFileService4Testing.GetCacheCreation(string fileName, string contentFolder)
+        {
+            DateTime dt = DateTime.MinValue;
 
-			await Task.Run(() =>
-			{
-				var path = GetPath(fileName, contentFolder);
-				dt = File.GetLastWriteTime(path);
-			});
+            await Task.Run(() =>
+            {
+                var path = GetPath(fileName, contentFolder);
+                dt = File.GetLastWriteTime(path);
+            });
 
-			return dt;
-		}
+            return dt;
+        }
 
-		//////           Tracing           //////
+        //////           Tracing           //////
 
-		const string TRACETAG = "FileService";
+        const string TRACETAG = "FileService";
 
-		/// <summary>
-		/// Trace msg using func to format the trace output.
-		/// </summary>
-		/// <param name="msg"></param>
-		/// <param name="func"></param>
-		private void Trace(string msg, [CallerMemberName] string func = "<Empty>")
-		{
-			//dbgService.TraceInfo(msg, TraceTag + func);
-			Debug.WriteLine($"{func} | {msg}");
-		}
+        /// <summary>
+        /// Trace msg using func to format the trace output.
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="func"></param>
+        private void Trace(string msg, [CallerMemberName] string func = "<Empty>")
+        {
+            System.Diagnostics.Trace.TraceInformation($"{func} | {msg}");
+        }
 
-		/// <summary>
-		/// Trace as verbose
-		/// </summary>
-		/// <param name="msg"></param>
-		/// <param name="func"></param>
-		private void TraceVerbose(string msg, [CallerMemberName] string func = "<Empty>")
-		{
-			//dbgService.TraceVerbose(msg, TraceTag + func);
-			Trace(msg, func);
-		}
+        /// <summary>
+        /// Trace as verbose
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="func"></param>
+        private void TraceVerbose(string msg, [CallerMemberName] string func = "<Empty>")
+        {
+            Trace(msg, func);
+        }
 
-		/// <summary>
-		/// Trace as Error
-		/// </summary>
-		/// <param name="msg"></param>
-		/// <param name="func"></param>
-		private void TraceError(string msg, [CallerMemberName] string func = "<Empty>")
-		{
-			//dbgService.TraceError(msg, TraceTag + func);
-			Trace(msg, func);
+        /// <summary>
+        /// Trace as Error
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="func"></param>
+        private void TraceError(string msg, [CallerMemberName] string func = "<Empty>")
+        {
+            Trace(msg, func);
+        }
 
-		}
-
-		/// <summary>
-		/// Trace as Error
-		/// </summary>
-		/// <param name="msg"></param>
-		/// <param name="ex"></param>
-		/// <param name="func"></param>
-		private void TraceError(string msg, Exception ex, [CallerMemberName] string func = "<Empty>")
-		{
-			//dbgService.TraceError(msg, ex, TraceTag + func);
-			Trace(msg + "\n\n" + ex.ToString(), func);
-
-		}
-
-	}
+        /// <summary>
+        /// Trace as Error
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="ex"></param>
+        /// <param name="func"></param>
+        private void TraceError(string msg, Exception ex, [CallerMemberName] string func = "<Empty>")
+        {
+            Trace(msg + "\n\n" + ex.ToString(), func);
+        }
+    }
 }
