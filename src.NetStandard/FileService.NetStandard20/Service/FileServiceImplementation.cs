@@ -13,8 +13,8 @@ namespace BiT21.FileService.Service
     /// <summary>
     /// Class implementation of the <see cref="IFileService"/> abstraction.
     /// </summary>
-	public class FileServiceImplementation : IFileService
-	{
+	public class FileServiceImplementation : IFileService, IFileService4Testing
+    {
         /// <summary>
         /// Property to define the sandbox folder where this FileService instance will work on.
         /// </summary>
@@ -386,7 +386,7 @@ namespace BiT21.FileService.Service
 		/// <param name="dateTime"></param>
 		/// <param name="fileName"></param>
 		/// <param name="contentFolder"></param>
-		public async Task SetCacheCreation(DateTime dateTime, string fileName, string contentFolder = null)
+		async Task IFileService4Testing.SetCacheCreation(DateTime dateTime, string fileName, string contentFolder = null)
 		{
 			await Task.Run(() =>
 			{
@@ -401,7 +401,7 @@ namespace BiT21.FileService.Service
         /// <param name="fileName"></param>
         /// <param name="contentFolder"></param>
         /// <returns></returns>
-        public async Task<DateTime> GetCacheCreation(string fileName, string contentFolder = null)
+        async Task<DateTime> IFileService4Testing.GetCacheCreation(string fileName, string contentFolder = null)
 		{
 			DateTime dt = DateTime.MinValue;
 

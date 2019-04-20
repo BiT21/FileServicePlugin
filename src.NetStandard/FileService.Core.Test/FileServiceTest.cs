@@ -392,6 +392,7 @@ namespace BiT21.FileService.Test
         public async Task ExistRecentCacheAsync_Test()
         {
             var fs = fileService as FileServiceImplementation;
+            var fs4t = (IFileService4Testing)fs;
             var filename = "ExistRecentCacheAsync_Filename";
             var safeoffsetSeconds = 2;
             var hoursOffset = 2;
@@ -401,12 +402,12 @@ namespace BiT21.FileService.Test
             await fileService.SaveObjectFileAsync(SimpleObject.GetObject(), filename);
 
             
-            await fs.SetCacheCreation((now - offset).AddSeconds(safeoffsetSeconds),filename);
-            Assert.AreEqual(await fs.GetCacheCreation(filename), (now - offset).AddSeconds(safeoffsetSeconds));
+            await fs4t.SetCacheCreation((now - offset).AddSeconds(safeoffsetSeconds),filename);
+            Assert.AreEqual(await fs4t.GetCacheCreation(filename), (now - offset).AddSeconds(safeoffsetSeconds));
             Assert.IsTrue(await fileService.ExistRecentCacheAsync(filename, offset));
 
-            await fs.SetCacheCreation((now -offset).AddSeconds(-safeoffsetSeconds), filename);
-            Assert.AreEqual(await fs.GetCacheCreation(filename), (now - offset).AddSeconds(-safeoffsetSeconds));
+            await fs4t.SetCacheCreation((now -offset).AddSeconds(-safeoffsetSeconds), filename);
+            Assert.AreEqual(await fs4t.GetCacheCreation(filename), (now - offset).AddSeconds(-safeoffsetSeconds));
             Assert.IsFalse(await fileService.ExistRecentCacheAsync(filename, offset));
         }
 
