@@ -45,6 +45,8 @@ namespace BiT21.FileService.Service
         /// ctor
         /// </summary>
         /// <param name="sandboxTag"></param>
+        /// <remarks>The default SpecialFolder is <see cref="System.Environment.SpecialFolder.LocalApplicationData"/></remarks>
+        
         public FileServiceImplementation(string sandboxTag) : 
             this(sandboxTag,DEFAULT_ENVIRONMENT_SPECIALFOLDER)
         {
@@ -53,8 +55,8 @@ namespace BiT21.FileService.Service
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="sandboxTag"></param>
-        /// <param name="specialFolder"></param>
+        /// <param name="sandboxTag">Name of the sandbox for this instance.</param>
+        /// <param name="specialFolder">Root Environment folder where to set the root sandbox folder</param>
         public FileServiceImplementation(string sandboxTag, Environment.SpecialFolder specialFolder) 
         {
             try
