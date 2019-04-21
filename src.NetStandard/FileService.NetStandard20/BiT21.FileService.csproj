@@ -1,22 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>BiT21.FileService</PackageId>
-    <VersionPrefix>2.0.1</VersionPrefix>
+    <VersionPrefix>3.0.2</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <Authors>Raul G Dibildos</Authors>
     <Company>BiT21</Company>
     <Product>BiT21 FileService</Product>
     <Copyright>Copyright 2018</Copyright>
-    <PackageLicenseUrl>https://github.com/BiT21/FileServicePlugin/blob/Starting/LICENSE</PackageLicenseUrl>
+    <PackageLicense>https://github.com/BiT21/FileServicePlugin/blob/Starting/LICENSE</PackageLicense>
     <PackageProjectUrl>https://github.com/BiT21/FileServicePlugin</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/BiT21/FileServicePlugin/develop/art/icon.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BiT21/FileServicePlugin</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>xamarin, pcl, xam.cpl, file system, service, android, ios, windows, uwp, xamarin.forms</PackageTags>
-    <Description>Easily have file system access from shared code using a common interface. Used by other plugins like JsonCache.</Description>
-    <PackageReleaseNotes>Moved Linked files to Shared Proyect. Move Plugin.FileService.Abstraction from PCL to .NetStandard</PackageReleaseNotes>
+    <PackageTags>xamarin, PCL, xam.cpl, file system, service, android, iOS, windows, UWP, xamarin.forms</PackageTags>
+    <Description>Easily have file system access from shared code using a common interface. Used by other plug-ins like JsonCache.</Description>
+    <PackageReleaseNotes>Moved Linked files to Shared Project. Move Plugin.FileService.Abstraction from PCL to .NetStandard</PackageReleaseNotes>
     <RootNamespace>BiT21.FileService</RootNamespace>
     <AssemblyName>BiT21.FileService</AssemblyName>
   </PropertyGroup>

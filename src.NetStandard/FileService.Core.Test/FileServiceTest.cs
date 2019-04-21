@@ -12,7 +12,7 @@ using BiT21.EncryptDecryptLib.Service;
 
 using BiT21.FileService.IService;
 using BiT21.FileService.Service;
-
+using System.IO;
 
 namespace BiT21.FileService.Test
 {
@@ -35,23 +35,47 @@ namespace BiT21.FileService.Test
             //    SandboxTag = SANDBOX_TAG
             //};
 
-            fileService = CrossFileService.Current;
+            fileService = new FileServiceImplementation(SANDBOX_TAG);
 
             encryptedDecrypt = new EncryptDecrypt();
+        }
+
+        [ClassCleanup]
+        public static void ClassCleanUP()
+        {
+            fileService.DeleteSandboxAsync().Wait();
         }
 
         [TestInitialize]
         public async Task Setup()
         {
-            fileService.SandboxTag = SANDBOX_TAG;
-            await fileService.DeleteSandboxAsync();
-            Assert.IsFalse(await fileService.ExistSandBoxAsync());
+            await fileService.DeleteFilesAsync();
         }
 
-        [TestCleanup]
-        public async Task CleanUp()
+        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
+        public void Ctor_Thow_On_Wrong_sandboxTag_Test()
         {
+            new FileServiceImplementation(">*");
+        }
 
+        [TestMethod]
+        public void Ctor_Use_EnvironmentSpecialFolder()
+        {
+            IFileService fs = new FileServiceImplementation(SANDBOX_TAG, Environment.SpecialFolder.MyDocuments);
+
+            var folder = fs.GetFullPath();
+
+            var expectedPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BiT21.FileService", SANDBOX_TAG);
+
+            Assert.AreEqual(expectedPath, folder);
+        }
+
+        [TestMethod]
+        public void Ctor_Creates_Root_Folder()
+        {
+            IFileService fs = new FileServiceImplementation(SANDBOX_TAG, Environment.SpecialFolder.MyDocuments);
+            Assert.IsTrue( fs.ExistSandBoxAsync().Result);
         }
 
         [TestMethod]
@@ -186,6 +210,12 @@ namespace BiT21.FileService.Test
         public async Task Read_ByteFileAsync_Object_FileNotExist_Test()
         {
             Assert.AreEqual(default(byte[]), await fileService.ReadByteFileAsync("fakename5634"));
+        }
+
+        [TestMethod]
+        public async Task Read_ByteFileAsync_ReturnEmpty_On_Wrong_Path_Test()
+        {
+            Assert.AreEqual(default(byte[]),await fileService.ReadByteFileAsync("fakename5634", ">*"));
         }
 
         [TestMethod]
@@ -392,6 +422,7 @@ namespace BiT21.FileService.Test
         public async Task ExistRecentCacheAsync_Test()
         {
             var fs = fileService as FileServiceImplementation;
+            var fs4t = (IFileService4Testing)fs;
             var filename = "ExistRecentCacheAsync_Filename";
             var safeoffsetSeconds = 2;
             var hoursOffset = 2;
@@ -401,12 +432,12 @@ namespace BiT21.FileService.Test
             await fileService.SaveObjectFileAsync(SimpleObject.GetObject(), filename);
 
             
-            await fs.SetCacheCreation((now - offset).AddSeconds(safeoffsetSeconds),filename);
-            Assert.AreEqual(await fs.GetCacheCreation(filename), (now - offset).AddSeconds(safeoffsetSeconds));
+            await fs4t.SetCacheCreation((now - offset).AddSeconds(safeoffsetSeconds),filename);
+            Assert.AreEqual(await fs4t.GetCacheCreation(filename), (now - offset).AddSeconds(safeoffsetSeconds));
             Assert.IsTrue(await fileService.ExistRecentCacheAsync(filename, offset));
 
-            await fs.SetCacheCreation((now -offset).AddSeconds(-safeoffsetSeconds), filename);
-            Assert.AreEqual(await fs.GetCacheCreation(filename), (now - offset).AddSeconds(-safeoffsetSeconds));
+            await fs4t.SetCacheCreation((now -offset).AddSeconds(-safeoffsetSeconds), filename);
+            Assert.AreEqual(await fs4t.GetCacheCreation(filename), (now - offset).AddSeconds(-safeoffsetSeconds));
             Assert.IsFalse(await fileService.ExistRecentCacheAsync(filename, offset));
         }
 
@@ -424,12 +455,19 @@ namespace BiT21.FileService.Test
             Assert.AreEqual(0, ret.Count);
         }
 
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof(Exception))]
         [TestMethod]
-        public void GetFullPathEmpty_Test()
+        public void SandboxTag_Set_Throw_On_Already_Set_Test()
         {
             fileService.SandboxTag = string.Empty;
-            var ret = fileService.GetFullPath();
+        }
+
+        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
+        public void GetFullPath_Throw_On_SandboxTag_NotSet_Test()
+        {
+            IFileService fs = new FileServiceImplementation(string.Empty);
+            var ret = fs.GetFullPath();
         }
 
         [TestMethod]

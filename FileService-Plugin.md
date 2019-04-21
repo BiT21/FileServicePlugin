@@ -1,5 +1,5 @@
 ## File Service Plugin for Xamarin and Windows
-[FileService-Plugin](FileService-Plugin.md)
+
 >
 > Library version 2.0 has been published. This nuget contains .Net Standard version of this FileService logic.
 > New code at src.NetStandard.
@@ -15,32 +15,30 @@ A simple way to create a file system sandbox where your aplication will be able 
 
 **Platform Support**
 
-|Platform|
-| ------------------- | 
-NetStandard 2.0
+|Platform|TFM|Version|
+| ------------------- | ------------------: | ------------------: |
+|Xamarin.Android|MonoAndroid10|API 10+|
+|Xamarin.iOS|Xamarin.iOS10|iOS 7+|
+|Windows 10 UWP|UAP10|10+|
+|.NetFramework|net45|4.5+
 
 ### API Usage
-On version 3.0 we have provided several constructors that allows to chose the target folder where FileService will set his sandbox so save files and folders for the application.
-
-```cs
-/// <summary>
-/// ctor
-/// </summary>
-/// <param name="sandboxTag"></param>
-/// <remarks>The default SpecialFolder is <see cref="System.Environment.SpecialFolder.LocalApplicationData"/>remarks>
-public FileServiceImplementation(string sandboxTag) 
-
-/// <summary>
-/// ctor
-/// </summary>
-/// <param name="sandboxTag">Name of the sandbox for this instance.</param>
-/// <param name="specialFolder">Root Environment folder where to set the root sandbox folder</param>
-public FileServiceImplementation(string sandboxTag, System.Environment.SpecialFolder specialFolder) 
-```
-
-Therefore the initialization will stand:
+To gain access to the FileService class use this methord.
 ```csharp
-IFileService fileService = new FileServiceImplementation(SANDBOX_TAG);
+var f = CrossFileService.Current;
+```
+Before macking any call to FileService we need to specify the sandboxtag, that will define the sandbox we will be targeting the class calls.
+```csharp
+f.SandboxTag = "MyAplicationSandboxTag";
+```
+This tag translates to a folder on the device FileSystem. 
+
+The original design stands that the application will be working with a single sandbox. This will change in future releases.
+
+Thefore the initialization will stand:
+```csharp
+IFileService fileService = FileService.CrossFileService.Current;
+fileService.SandboxTag = SANDBOX_TAG;
 string content = "This is the content I need to save in a text file";
 
 //Create file and save content.
@@ -60,11 +58,20 @@ Assert.IsFalse(await fileService.ExistSandBoxAsync());
 ```
 
 #### Roadmap
-Planning to extend service with
+Planning to extend the plugin with
 
+* Multi sandbox
 * Encrypted storage. On Test proyect you have a sample to use FileService in combination wth BiT21.EncryptDecrypt to protect file data.
 
+### Platform specifics
+Sandbox will be created 
 
+|Platform|Path|
+| ------------------- | :------------------ |
+iOS         |Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);|
+Xamarin.Android     |Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);|
+Windows_UWP |Windows.Storage.ApplicationData.Current.LocalCacheFolder.Path;|
+ 
 #### Contributions
 Contributions are welcome! If you find a bug please report it and if you want a feature please report it.
 
